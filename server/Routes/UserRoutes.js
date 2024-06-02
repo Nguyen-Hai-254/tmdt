@@ -26,7 +26,7 @@ userRouter.post(
       });
     } else {
       res.status(401);
-      throw new Error("Invalid Username or Password");
+      throw new Error("Invalid Email or Password");
     }
   })
 );

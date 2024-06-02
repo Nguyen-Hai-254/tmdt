@@ -8,6 +8,9 @@ const Register = () => {
         <>
             <div className="register--container">
                 <div className="register--photo">
+                    <Link to="/">
+                        <img src="./images/logo.png" alt="Logo" className="register--logo" />
+                    </Link>
                     <img src="./images/registerbackground.png" alt="Register" className="register--photo-img" />
                 </div>
                 <div className="register--content">
