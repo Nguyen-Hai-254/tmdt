@@ -25,10 +25,11 @@ const Header = () => {
       history.push("/");
     }
   };
+
   return (
     <div>
       {/* Top Header */}
-      <div className="Announcement ">
+      <div className="Announcement " style={{ backgroundColor: '#EC2028' }}>
         <div className="container">
           <div className="row">
             <div className="col-md-6 d-flex align-items-center display-none">
@@ -57,14 +58,14 @@ const Header = () => {
       </div>
       {/* Header */}
       <div className="header">
-        <div className="container">
+        <div className="container" >
           {/* MOBILE HEADER */}
           <div className="mobile-header">
             <div className="container ">
               <div className="row ">
                 <div className="col-6 d-flex align-items-center">
                   <Link className="navbar-brand" to="/">
-                    <img alt="logo" src="/images/logo.png" />
+                    <img alt="logo" src="../images/Cookies.png" />
                   </Link>
                 </div>
                 <div className="col-6 d-flex align-items-center justify-content-end Login-Register">
@@ -139,11 +140,11 @@ const Header = () => {
           </div>
 
           {/* PC HEADER */}
-          <div className="pc-header">
+          <div className="pc-header" style={{padding: '0px'}}>
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">
                 <Link className="navbar-brand" to="/">
-                  <img alt="logo" src="/images/logo.png" />
+                <img alt="logo" src={require('../images/Cookies.png').default} />
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
@@ -151,11 +152,12 @@ const Header = () => {
                   <input
                     type="search"
                     className="form-control rounded search"
-                    placeholder="Tìm kiếm từ khóa"
+                    placeholder="Tìm kiếm món ăn"
                     onChange={(e) => setKeyword(e.target.value)}
+                    style={{ backgroundColor: '#EC2028' }}
                   />
-                  <button type="submit" className="search-button">
-                    Tìm kiếm
+                  <button type="submit" className="search-button" style={{backgroundColor:'#FFFFFF', color: '#EC2028'} } >
+                    Tìm kiếm 
                   </button>
                 </form>
               </div>
@@ -187,8 +189,8 @@ const Header = () => {
                   </div>
                 ) : (
                   <>
-                    <Link to="/register">Đăng ký</Link>
-                    <Link to="/login">Đăng nhập</Link>
+                    <Link to="/register" style={{ color: '#EC2028' }}>Đăng ký</Link>
+                    <Link to="/login" style={{ color: '#EC2028' }}>Đăng nhập</Link>
                   </>
                 )}
 
