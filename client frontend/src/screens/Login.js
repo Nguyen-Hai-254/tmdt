@@ -8,7 +8,7 @@ import { Button, Typography } from 'antd';
 import { MailOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 
-const { Title } = Typography; 
+const { Title, Text } = Typography; 
 const Login = ({ location, history }) => {
   window.scrollTo(0, 0);
   const [email, setEmail] = useState("");
@@ -44,7 +44,6 @@ const Login = ({ location, history }) => {
         <div className="login--content">
           <div className="login--content--title">
             <Title level={2}>Đăng nhập</Title>
-            <Title level={4}>Hoặc đăng ký <Link to='/register'>Tại đây</Link></Title>
           </div>
           <div className="login--content--form">
             {error && <Message variant="alert-danger">{error}</Message>}
@@ -85,6 +84,7 @@ const Login = ({ location, history }) => {
                 htmlType="submit"
               >Đăng nhập</Button>
             </form>
+            <Text>Bạn chưa có tài khoản? Đăng ký <Link to='/register'>Tại đây</Link></Text>
           </div>
         </div>
 
