@@ -2,7 +2,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom"
 
 import { Button, Typography } from 'antd';
 
-const { Title } = Typography; 
+const { Title, Text } = Typography; 
 const Register = () => {
     return (
         <>
@@ -15,12 +15,9 @@ const Register = () => {
                 </div>
                 <div className="register--content">
                     <div className="register--content--title">
-                        <Title level={2}>Đăng ký tham gia với chúng tôi</Title>
-                        <Title level={4}>Đã có tài khoản?</Title>
-                        <Title level={4}>Đăng nhập <Link to='/login'>Tại đây</Link></Title>
+                        <Title level={3}>Đăng ký tham gia với chúng tôi</Title>
                     </div>
                     <div className="register--content--btn">
-                        <div className="wrap--btn">
                             <Button
                                 type="primary"
                                 size="large"
@@ -28,8 +25,6 @@ const Register = () => {
                             >
                                 <Link to='/student/register'>Với tư cách học viên</Link>
                             </Button>
-                        </div>
-                        <div className="wrap--btn">
                             <Button
                                 type="primary"
                                 size="large"
@@ -37,8 +32,8 @@ const Register = () => {
                             >
                                 <Link to='/chef/register'>Với tư cách người bán khóa học</Link>
                             </Button>
-                        </div>
                     </div>
+                    <Text >Bạn đã có tài khoản? Đăng nhập <Link to='/login'>Tại đây</Link></Text>
                     {/* <Link to='/chef/register'><Button variant="contained">Với tư cách người bán khóa học</Button></Link> */}
                 </div>
             </div>

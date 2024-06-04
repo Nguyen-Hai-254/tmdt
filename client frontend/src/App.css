@@ -911,7 +911,6 @@ textarea:focus {
   display: flex;
   min-height: 100vh; 
   overflow: hidden; 
-
 }
 
 .register--photo {
@@ -954,12 +953,17 @@ textarea:focus {
 .ant-typography {
   margin-bottom: 1rem; 
 }
-
+.register--content--btn{
+  width: 54%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
 .register--container .ant-btn{
-  width: 150%;
-  height: 40px;
+  width: 100%;
+  height: 42px;
   background-color: #EC2028;
-  margin-top: 16px;
+  margin-top: 24px;
   border-radius: 20px;
 
 }
@@ -1004,10 +1008,12 @@ textarea:focus {
 }
 .login--content--form .ant-btn {
   width: 100%;
-  height: 40px;
+  height: 42px;
   background-color: #EC2028;
   margin-top: 16px;
+  margin-bottom: 16px;
   border-radius: 20px;
+
 }
 
 .login--content--form--email,
@@ -1021,4 +1027,82 @@ textarea:focus {
   margin-right: 10px; /* Adjust the margin between the icon and the input */
 }
 
+/* //////////////// */
+/* Register Student */
+.register-student--container{
+  display: flex;
+  min-height: 100vh; 
+}
+
+.register-student--content{
+  flex: 6.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem; 
+  background-color: #ffffff; 
+  overflow: hidden;
+  align-items: center;
+}
+.register-student--content--form {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.164);
+  border-radius: 8px;
+}
+
+.register-student--content--form .ant-btn {
+  width: 100%;
+  height: 42px;
+  background-color: #EC2028;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  border-radius: 20px;
+
+}
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form-item {
+  flex: 1;
+}
+
+.form-item:first-child {
+  margin-right: 50px;
+  }
+
+.form-item input,
+.form-item .ant-input-password {
+  width: 100%; 
+}
+
+.loading-spinner {
+  display: block;
+}
+
+.ant-row.ant-form-item-row.css-dev-only-do-not-override-1okl62o {
+  flex-direction: row !important;
+}
+/* //////////////// */
+
+/* Register Chef */
+.register-chef--content{
+  flex: 6.5;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem; 
+  background-color: #ffffff; 
+  overflow: hidden;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 100vh;
+}
 /* //////////////// */

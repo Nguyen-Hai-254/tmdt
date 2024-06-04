@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Message from "../components/LoadingError/Error";
-import Loading from "../components/LoadingError/Loading";
+
+import { Form, Input, Button, Radio, Alert, Spin, Typography } from 'antd';
 import { register } from "../Redux/Actions/userActions";
-import Header from "../components/Header";
-import { Radio, FormControl, FormLabel, RadioGroup, FormControlLabel } from '@mui/material';
+import logo from "../images/logo.png";  
+import registerBackground from "../images/registerbackground.png"; 
+
+const { Title } = Typography; 
+
+
 
 const StudentRegister = ({ location, history }) => {
-    // window.scrollTo(0, 0);
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [telephone, setTelephone] = useState("");
-    const [sex, setSex] = useState("");
+    const [form] = Form.useForm();
 
     const dispatch = useDispatch();
     const redirect = location.search ? location.search.split("=")[1] : "/";
@@ -28,74 +26,100 @@ const StudentRegister = ({ location, history }) => {
         }
     }, [userInfo, history, redirect]);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const submitHandler = (values) => {
+        const { name, username, email, password, telephone, sex } = values;
         dispatch(register(name, username, email, password, telephone, sex, 'Học viên'));
     };
 
     return (
         <>
-            <Header />
-            <div className="container d-flex flex-column justify-content-center align-items-center login-center">
-                {error && <Message variant="alert-danger">{error}</Message>}
-                {loading && <Loading />}
+            <div className="register-student--container">
+                <div className="register--photo">
+                    <Link to="/">
+                    <img src={logo} alt="Logo" className="register--logo" />
+                    </Link>
+                    <img src={registerBackground} alt="Register" className="register--photo-img" />
+                </div>
+                <div className="register-student--content">
+                    <div className="register-student--content--title">
+                        <Title level={2}>Đăng ký học viên</Title>
+                    </div>
+                    <div className="register-student--content--form">
+                        {error && <Alert message={error} type="error" showIcon />}
+                        {loading && <Spin size="large" />}
+                        
+                        <Form form={form} layout="vertical" className="Login" onFinish={submitHandler}>
+                            <div className="form-row">
+                                <Form.Item
+                                    name="name"
+                                    label="Họ và tên"
+                                    rules={[{ required: true, message: 'Vui lòng nhập họ và tên của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Họ và tên" />
+                                </Form.Item>
+                                <Form.Item
+                                    name="username"
+                                    label="Username"
+                                    rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Username" />
+                                </Form.Item>
+                            </div>
 
-                <form
-                    className="Login col-md-8 col-lg-4 col-11"
-                    onSubmit={submitHandler}
-                >
-                    <input
-                        type="text"
-                        placeholder="Họ và tên"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Mật khẩu"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Số điện thoại"
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                    />
+                            <div className="form-row">
+                                <Form.Item
+                                    name="telephone"
+                                    label="Số điện thoại"
+                                    rules={[{ required: true, message: 'Vui lòng nhập số điện thoại của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Số điện thoại" />
+                                </Form.Item>
+                                <Form.Item
+                                    name="password"
+                                    label="Mật khẩu"
+                                    rules={[{ required: true, message: 'Vui lòng nhập mật khẩu của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input.Password placeholder="Mật khẩu" />
+                                </Form.Item>
 
-                    <FormControl sx={{ mt: 2 }}>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Giới tính</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                            onChange={(e) => setSex(e.target.value)}
-                        >
-                            <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
-                            <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
-                            <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
-                        </RadioGroup>
-                    </FormControl>
+                            </div>
+                            <Form.Item
+                                    name="email"
+                                    label="Email"
+                                    rules={[
+                                        { required: true, message: 'Vui lòng nhập email của bạn' },
+                                        { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
+                                    ]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Email" />
+                                </Form.Item>
 
-                    <button type="submit">Register</button>
-                    <p>
-                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                            I Have Account <strong>Login</strong>
-                        </Link>
-                    </p>
-                </form>
+
+                            <Form.Item
+                                name="sex"
+                                label="Giới tính"
+                                rules={[{ required: true, message: 'Vui lòng chọn giới tính của bạn' }]}
+                            >
+                                <Radio.Group>
+                                    <Radio value="Nam">Nam</Radio>
+                                    <Radio value="Nữ">Nữ</Radio>
+                                    <Radio value="Khác">Khác</Radio>
+                                </Radio.Group>
+                            </Form.Item>
+
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    Đăng ký
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </div>
             </div>
         </>
     );

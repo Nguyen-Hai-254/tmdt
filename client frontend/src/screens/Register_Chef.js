@@ -4,23 +4,20 @@ import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
 import { register } from "../Redux/Actions/userActions";
-import Header from "../components/Header";
-import { Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, Button } from '@mui/material';
+import { Form, Input, Radio, Button, Typography, Upload } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
 import { convertToBase64 } from "../utils/convert";
+import logo from "../images/logo.png";  
+import registerBackground from "../images/registerbackground.png"; 
+
+const { TextArea } = Input;
+const { Title } = Typography; 
 
 const ChefRegister = ({ location, history }) => {
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [telephone, setTelephone] = useState("");
-    const [description, setDescription] = useState("");
+    const [form] = Form.useForm();
     const [certification, setCertification] = useState("");
-    const [sex, setSex] = useState("");
-
     const dispatch = useDispatch();
     const redirect = location.search ? location.search.split("=")[1] : "/";
-
     const userRegister = useSelector((state) => state.userRegister);
     const { error, loading, userInfo } = userRegister;
 
@@ -30,94 +27,136 @@ const ChefRegister = ({ location, history }) => {
         }
     }, [userInfo, history, redirect]);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const submitHandler = async (values) => {
+        const { name, username, email, password, telephone, sex, description } = values;
         dispatch(register(name, username, email, password, telephone, sex, 'Đầu bếp', description, certification));
     };
 
-    // Xử lí upload hình ảnh ở đây nhớ thêm state để lưu chuỗi mã hóa hình ảnh (certification)
     const handleChangeImage = async (e) => {
         const base64 = await convertToBase64(e);
         setCertification(base64);
     }
 
-
     return (
         <>
-            <Header />
-            <div className="container d-flex flex-column justify-content-center align-items-center login-center">
-                {error && <Message variant="alert-danger">{error}</Message>}
-                {loading && <Loading />}
-
-                <form
-                    className="Login col-md-8 col-lg-4 col-11"
-                    onSubmit={submitHandler}
-                >
-                    <input
-                        type="text"
-                        placeholder="Họ và tên"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Mật khẩu"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Số điện thoại"
-                        value={telephone}
-                        onChange={(e) => setTelephone(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Giới thiệu bản thân"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    {/* Upload hình ảnh ở đây */}
-                    <label>Bằng cấp</label>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleChangeImage(e)}
-                    />
-
-                    <FormControl sx={{ mt: 2 }}>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Giới tính</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                            onChange={(e) => setSex(e.target.value)}
+            <div className="register-student--container">
+                <div className="register--photo">
+                    <Link to="/">
+                    <img src={logo} alt="Logo" className="register--logo" />
+                    </Link>
+                    <img src={registerBackground} alt="Register" className="register--photo-img" />
+                </div>
+                <div className="register-chef--content">
+                    <div className="register-student--content--title">
+                        <Title level={2}>Đăng ký bán khóa học</Title>
+                    </div>
+                    <div className="register-student--content--form">
+                        {error && <Message variant="alert-danger">{error}</Message>}
+                        {loading && <Loading />}
+                        <Form
+                            form={form}
+                            onFinish={submitHandler}
+                            className="Login"
+                            layout="vertical"
                         >
-                            <FormControlLabel value="Nam" control={<Radio />} label="Nam" />
-                            <FormControlLabel value="Nữ" control={<Radio />} label="Nữ" />
-                            <FormControlLabel value="Khác" control={<Radio />} label="Khác" />
-                        </RadioGroup>
-                    </FormControl>
+                            <div className="form-row">
+                                <Form.Item
+                                    name="name"
+                                    label="Họ và tên"
+                                    rules={[{ required: true, message: 'Vui lòng nhập họ và tên của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Họ và tên" />
+                                </Form.Item>
 
-                    <button type="submit">Register</button>
-                    <p>
-                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-                            I Have Account <strong>Login</strong>
-                        </Link>
-                    </p>
-                </form>
+                                <Form.Item
+                                    name="username"
+                                    label="Username"
+                                    rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Username" />
+                                </Form.Item>
+                            </div>
+                            <div className="form-row">
+                                <Form.Item
+                                    name="telephone"
+                                    label="Số điện thoại"
+                                    rules={[{ required: true, message: 'Vui lòng nhập số điện thoại của bạn' }]}
+                                    className="form-item"
+                                >
+                                    <Input placeholder="Số điện thoại" />
+                                </Form.Item>
+
+                                <Form.Item
+                                    name="password"
+                                    rules={[{ required: true, message: 'Vui lòng nhập mật khẩu của bạn' }]}
+                                    label="Mật khẩu"
+                                    className="form-item"
+                                >
+                                    <Input.Password placeholder="Password" />
+                                </Form.Item>
+                            </div>
+                            <Form.Item
+                                    name="email"
+                                    rules={[
+                                        { required: true, message: 'Vui lòng nhập email của bạn' },
+                                        { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
+                                    ]}
+                                    label="Email"
+                                    className="form-item"
+
+                                >
+                                    <Input placeholder="Email" />
+                                </Form.Item>
+                            <Form.Item
+                                name="description"
+                                label="Giới thiệu bản thân"
+                                rules={[{ required: true, message: 'Vui lòng giới thiệu bản thân' }]}
+                                className="form-item"
+                            >
+                                <TextArea placeholder="Giới thiệu bản thân" />
+                            </Form.Item>
+
+                            <Form.Item
+                                name="sex"
+                                label="Giới tính"
+                                className="form-item"
+                                rules={[{ required: true, message: 'Vui lòng chọn giới tính của bạn' }]}
+                            >
+                                <Radio.Group>
+                                    <Radio value="Nam">Nam</Radio>
+                                    <Radio value="Nữ">Nữ</Radio>
+                                    <Radio value="Khác">Khác</Radio>
+                                </Radio.Group>
+                            </Form.Item>
+
+                            <Form.Item
+                                name="certification"
+                                label="Chứng chỉ đầu bếp"
+                                rules={[{ required: true, message: 'Vui lòng cung cấp chứng chỉ' }]}
+                                >
+                                <Upload.Dragger
+                                    listType="picture"
+                                    accept="image/*"
+                                    valuePropName="fileList"
+                                    getValueFromEvent={handleChangeImage}
+                                >
+                                    <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                    </p>
+                                    <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
+                                </Upload.Dragger>
+                                </Form.Item>
+
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit">
+                                    Register
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </div>
             </div>
         </>
     );
