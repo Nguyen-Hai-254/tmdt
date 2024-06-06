@@ -599,12 +599,14 @@ textarea:focus {
   border: 0px;
   text-transform: uppercase;
   font-size: 13px;
-  background-color: #1cb803;
+  background-color: #EC2028;
   color: #ffffff;
 }
 
 .cart-buttons a:nth-child(1) button {
-  background-color: #000000;
+  background-color: #D9D9D9;
+  color: #000;
+  font-weight: bold;
 }
 
 /* FOOTER */
@@ -756,6 +758,7 @@ textarea:focus {
   transition-duration: 1s;
   transform: scale(1.08);
 }
+
 /*  Food Register */
 .food-register--wrapper {
   background-color: #FBCFCF;
@@ -781,7 +784,7 @@ textarea:focus {
   color: #fff;
 }
 
-.food-register--form .ant-form-item-label > label {
+.food-register--form .ant-form-item-label>label {
   line-height: 1.4;
   font-size: 16px;
   font-weight: 600;
@@ -798,7 +801,7 @@ textarea:focus {
   height: 36px !important;
   font-size: 16px;
   font-weight: 500;
-  
+
 }
 
 .food-register--form .ant-select-selector span {
@@ -863,7 +866,7 @@ textarea:focus {
   color: #fff;
 }
 
-.food-court-register--form .ant-form-item-label > label {
+.food-court-register--form .ant-form-item-label>label {
   line-height: 1.4;
   font-size: 16px;
   font-weight: 600;
@@ -880,7 +883,7 @@ textarea:focus {
   height: 36px !important;
   font-size: 16px;
   font-weight: 500;
-  
+
 }
 
 .food-court-register--form .ant-select-selector span {
@@ -902,23 +905,24 @@ textarea:focus {
   width: 60%;
   margin: 0 auto;
 }
+
 /* //////////////// */
 
 /* Register */
 .register--container {
   display: flex;
-  min-height: 100vh; 
-  overflow: hidden; 
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .register--photo {
   flex: 3.5;
   display: flex;
-  position: relative; 
+  position: relative;
   align-items: center;
   justify-content: center;
   background-color: #f5f5f5;
-  height: 100vh; 
+  height: 100vh;
 }
 
 .register--photo-img {
@@ -927,14 +931,14 @@ textarea:focus {
 }
 
 .register--logo {
-  position: absolute; 
-  top: 0px; 
-  left: 0px; 
-  width: 140px; 
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 140px;
   height: auto;
   background-color: #ffffffad;
   box-sizing: border-box;
-  border: none; 
+  border: none;
   border-radius: 40px;
 }
 
@@ -943,21 +947,24 @@ textarea:focus {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem; 
-  background-color: #ffffff; 
+  padding: 2rem;
+  background-color: #ffffff;
   overflow: hidden;
   align-items: center;
 }
+
 .ant-typography {
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
 }
-.register--content--btn{
+
+.register--content--btn {
   width: 54%;
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
 }
-.register--container .ant-btn{
+
+.register--container .ant-btn {
   width: 100%;
   height: 42px;
   background-color: #EC2028;
@@ -965,27 +972,31 @@ textarea:focus {
   border-radius: 20px;
 
 }
+
 /* //////////////// */
 
 /* Login */
-.login--container{
+.login--container {
   display: flex;
-  max-height: 100vh; 
-  overflow: hidden; 
+  max-height: 100vh;
+  overflow: hidden;
 }
-.login--content{
+
+.login--content {
   flex: 6.5;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem; 
-  background-color: #ffffff; 
+  padding: 2rem;
+  background-color: #ffffff;
   overflow: hidden;
   align-items: center;
 }
-.login--content--title{
+
+.login--content--title {
   padding-bottom: 32px;
 }
+
 .login--content--form {
   width: 100%;
   max-width: 400px;
@@ -997,13 +1008,14 @@ textarea:focus {
 }
 
 .login--content--form input {
-  flex: 1; 
+  flex: 1;
   padding: 10px;
   margin-bottom: 15px;
-  border: none; 
-  border-bottom: 1px solid #ccc; 
+  border: none;
+  border-bottom: 1px solid #ccc;
   font-size: 16px;
 }
+
 .login--content--form .ant-btn {
   width: 100%;
   height: 42px;
@@ -1022,26 +1034,28 @@ textarea:focus {
 
 .login--content--form--email .email--icon,
 .login--content--form--password .password-icon {
-  margin-right: 10px; /* Adjust the margin between the icon and the input */
+  margin-right: 10px;
+  /* Adjust the margin between the icon and the input */
 }
 
 /* //////////////// */
 /* Register Student */
-.register-student--container{
+.register-student--container {
   display: flex;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
-.register-student--content{
+.register-student--content {
   flex: 6.5;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem; 
-  background-color: #ffffff; 
+  padding: 2rem;
+  background-color: #ffffff;
   overflow: hidden;
   align-items: center;
 }
+
 .register-student--content--form {
   min-width: 100%;
   display: flex;
@@ -1063,6 +1077,7 @@ textarea:focus {
   border-radius: 20px;
 
 }
+
 .form-row {
   display: flex;
   justify-content: space-between;
@@ -1075,11 +1090,11 @@ textarea:focus {
 
 .form-item:first-child {
   margin-right: 50px;
-  }
+}
 
 .form-item input,
 .form-item .ant-input-password {
-  width: 100%; 
+  width: 100%;
 }
 
 .loading-spinner {
@@ -1089,18 +1104,20 @@ textarea:focus {
 .ant-row.ant-form-item-row.css-dev-only-do-not-override-1okl62o {
   flex-direction: row !important;
 }
+
 /* //////////////// */
 
 /* Register Chef */
-.register-chef--content{
+.register-chef--content {
   flex: 6.5;
   display: flex;
   flex-direction: column;
-  padding: 2rem; 
-  background-color: #ffffff; 
+  padding: 2rem;
+  background-color: #ffffff;
   overflow: hidden;
   align-items: center;
   overflow-y: auto;
   max-height: 100vh;
 }
+
 /* //////////////// */

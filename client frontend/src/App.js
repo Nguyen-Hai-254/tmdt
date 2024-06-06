@@ -20,6 +20,7 @@ import ChefRegister from "./screens/Register_Chef";
 import Register from "./screens/Register";
 import FoodRegister from "./screens/FoodRegister";
 import FoodCourtRegister from "./screens/FoodCourtRegister";
+import CourseManagement from "./screens/Chef/CourseManagement";
 
 const App = () => {
   return (
@@ -47,6 +48,8 @@ const App = () => {
         <PrivateRouter path="/food-register" component={FoodRegister} />
         <PrivateRouter path="/food-court-register" component={FoodCourtRegister} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
+
+        <PrivateRouter path="/chef" component={CourseManagement} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
