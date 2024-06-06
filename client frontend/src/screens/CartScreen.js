@@ -50,7 +50,7 @@ const CartScreen = ({ match, location, history }) => {
         ) : (
           <>
             <div className=" alert alert-info text-center mt-3">
-              Tổng số sản phẩm trong giỏ hàng
+              Tổng số khóa học đã chọn
               <Link className="text-success mx-2" to="/cart">
                 ({cartItems.length})
               </Link>
@@ -72,7 +72,7 @@ const CartScreen = ({ match, location, history }) => {
                     <h4>{item.name}</h4>
                   </Link>
                 </div>
-                <div className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
+                {/* <div className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
                   <h6>SỐ LƯỢNG</h6>
                   <select
                     value={item.qty}
@@ -86,7 +86,7 @@ const CartScreen = ({ match, location, history }) => {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div> */}
                 <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
                   <h6>GIÁ</h6>
                   <h4>{item.price}Đ</h4>
