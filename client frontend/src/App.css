@@ -837,7 +837,10 @@ textarea:focus {
   width: 60%;
   margin: 0 auto;
 }
-
+.food-register--form .btn-delete-img { 
+  width: 80px !important;
+  float: right;
+}
 /*  Food Court Register */
 .food-court-register--wrapper {
   background-color: #FBCFCF;
