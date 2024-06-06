@@ -125,7 +125,7 @@ const FoodRegister = () => {
                                 ]}
                             >
                                 <Select 
-                                    placeholder="Thời lượng" 
+                                    placeholder="Loại món ăn" 
                                     options={options}
                                 />
                                 
@@ -142,7 +142,7 @@ const FoodRegister = () => {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Loại món ăn" />
+                                <Input placeholder="Thời lượng" />
                             </Form.Item>
 
                             <Form.Item
@@ -188,17 +188,17 @@ const FoodRegister = () => {
                             </Form.Item>
 
                             <Form.Item
-                                label="Cam kết"
+                                label="Thực hiện món ăn"
                                 name="make"
                                 rules={[
                                     {
                                         required: true,
                                         message:
-                                            'Vui lòng nhập cam kết',
+                                            'Vui lòng nhập cách thực hiện món ăn',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Cam kết" />
+                                <Input placeholder="Thực hiện món ăn" />
                             </Form.Item>
 
                             <Form.Item
