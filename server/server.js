@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import bodyParser from "body-parser"
+import bodyParser from "body-parser";
+import cors from 'cors';
 import connectDatabase from "./config/MongoDb.js";
 import ImportData from "./DataImport.js";
 import productRoute from "./Routes/ProductRoutes.js";
@@ -15,7 +16,7 @@ import courseRouter from "./Routes/courseRoutes.js";
 dotenv.config();
 connectDatabase();
 const app = express();
-// app.use(express.json());
+app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 

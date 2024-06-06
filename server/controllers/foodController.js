@@ -1,6 +1,5 @@
 import Food from "../Models/FoodModel.js";
 
-
 class FoodController {
     static handleCreateFood = async (req, res) => {
         try {
@@ -15,7 +14,7 @@ class FoodController {
                 name: name, image, description, time, ingredient, processing, make, kind, user: req.user._id, isFree
             });
             await food.save()
-
+            
             return res.status(200).json({
                 message: 'Post a successful dish',
                 data: {

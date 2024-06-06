@@ -25,7 +25,7 @@ const foodSchema = mongoose.Schema(
         video: { type: String },
         description: { type: String, }, // mô tả món ăn
         time: { type: String, }, // thời gian nấu món ăn
-        ingredient: [{ name: { type: String, require: true }, qty: { type: String, require: true } }], // nguyên liệu
+        ingredient: [{  type: String, require: true }], // nguyên liệu
         processing: [{ type: String, require: true }], // sơ chế
         make: [{ type: String, require: true }], // thực hiện món ăn
         reviews: [reviewSchema],

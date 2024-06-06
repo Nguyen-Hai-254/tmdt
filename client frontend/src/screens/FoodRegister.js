@@ -1,23 +1,96 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Header from "../components/Header";
-import { Button, Checkbox, Form, Input, InputNumber, Select, Upload } from 'antd';
+import { Button, Checkbox, Form, Image, Input, Select, Upload, message } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
-import { convertToBase64 } from "../utils/convert";
+import { foodKindEnum } from "../utils/enum";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 const FoodRegister = () => {
+    const userInfo = useSelector((state) => state.userLogin.userInfo);
+
     const [form] = Form.useForm();
-    
-    const handleRegisterFood = useCallback((values) => {
-        console.log('values', values);
-    }, [])
-    // Xử lí upload hình ảnh ở đây nhớ thêm state để lưu chuỗi mã hóa hình ảnh (certification)
-    const handleChangeImage = async (e) => {
-        const base64 = await convertToBase64(e);
-        // setCertification(base64);
+    const [isFree, setIsFree] = useState(false);
+    const [imgURL, setImgURL] = useState('');
+    const [certification, setCertification] = useState("");
+    const [showUpload, setShowUpload] = useState(true);
+    const [fileList, setFileList] = useState([]);
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
     }
+
+    const success = useCallback(() => {
+        messageApi.open({
+            type: 'success',
+            content: 'Tạo món ăn thành công',
+        });
+    }, [messageApi]);
+
+    const handleChangeCheckbox = useCallback((e) => {
+        setIsFree(e.target.checked);
+    }, [])
+
+    const handleUploadCoverImg = ({ fileList }) => {
+        if (fileList) {
+            setFileList(fileList);
+            const imageURL = URL.createObjectURL(fileList[0].originFileObj);
+            setImgURL(imageURL);
+            setShowUpload(false);
+        }
+    };
+
+    const handleDeleteImg = () => {
+        setImgURL('');
+        setShowUpload(true);
+        setFileList([]);
+    };
+
+    const handleChangeImage = useCallback(async () => {
+        if (fileList.length <= 0) {
+            return;
+        }
+        const base64 = await getBase64(fileList[0]?.originFileObj);
+        setCertification(base64);
+    }, [fileList])
+    const options = Object.entries(foodKindEnum).map(([key, value]) => ({ label: value, value: value }));
+    const handleRegisterFood = useCallback(async (values) => {
+        const body = {
+            ...values,
+            isFree,
+            image: certification,
+        }
+
+        const url = 'http://localhost:5000/api/food/create-food';
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userInfo.token}`
+            },
+        };
+        const response = await axios.post(url, body, config);
+        if (response?.status === 200) {
+            form.resetFields();
+            success();
+        }
+
+    }, [certification, form, isFree, success])
+
+    useEffect(() => {
+        handleChangeImage()
+    }, [handleChangeImage])
+
     return (
         <>
+            {contextHolder}
             <Header />
             <div className="food-register--wrapper">
                 <div className="container">
@@ -46,7 +119,7 @@ const FoodRegister = () => {
 
                             <Form.Item
                                 label="Loại món ăn"
-                                name="type"
+                                name="kind"
                                 rules={[
                                     {
                                         required: true,
@@ -55,7 +128,11 @@ const FoodRegister = () => {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Loại món ăn" />
+                                <Select
+                                    placeholder="Thời lượng"
+                                    options={options}
+                                />
+
                             </Form.Item>
 
                             <Form.Item
@@ -69,14 +146,7 @@ const FoodRegister = () => {
                                     },
                                 ]}
                             >
-                                <Select 
-                                    placeholder="Thời lượng" 
-                                    options={[
-                                        { value: 'jack', label: 'Jack' },
-                                        { value: 'lucy', label: 'Lucy' },
-                                        { value: 'Yiminghe', label: 'yiminghe' },
-                                    ]}
-                                />
+                                <Input placeholder="Loại món ăn" />
                             </Form.Item>
 
                             <Form.Item
@@ -93,38 +163,23 @@ const FoodRegister = () => {
                                 <Input placeholder="Mô tả chi tiết món ăn" />
                             </Form.Item>
 
-                            <div className="double--columns">
-                                <Form.Item
-                                    label="Tên nguyên liệu"
-                                    name="material_name"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng nhập tên nguyên liệu',
-                                        },
-                                    ]}
-                                >
-                                    <Input placeholder="Tên nguyên liệu" />
-                                </Form.Item>
-                                <Form.Item
-                                    label="Số lượng"
-                                    name="count"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message:
-                                                'Vui lòng nhập số lượng nguyên liệu',
-                                        },
-                                    ]}
-                                >
-                                    <InputNumber placeholder="Số lượng nguyên liệu" />
-                                </Form.Item>
-                            </div>
+                            <Form.Item
+                                label="Tên nguyên liệu"
+                                name="ingredient"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Vui lòng nhập tên nguyên liệu',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Tên nguyên liệu" />
+                            </Form.Item>
 
                             <Form.Item
                                 label="Cách chế biến"
-                                name="method"
+                                name="processing"
                                 rules={[
                                     {
                                         required: true,
@@ -138,7 +193,7 @@ const FoodRegister = () => {
 
                             <Form.Item
                                 label="Cam kết"
-                                name="commit"
+                                name="make"
                                 rules={[
                                     {
                                         required: true,
@@ -152,28 +207,41 @@ const FoodRegister = () => {
 
                             <Form.Item
                                 label="Hình ảnh, công thức món ăn"
-                                name="images"
+                                name="image"
                             >
-                                <Upload.Dragger
-                                    listType="picture"
-                                    accept="image/*"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={handleChangeImage}
-                                    
-                                >
-                                    <p className="ant-upload-drag-icon">
-                                        <InboxOutlined />
-                                    </p>
-                                    <p className="ant-upload-text">
-                                        Hình ảnh, công thức món ăn
-                                    </p>
-                                </Upload.Dragger>
+                                {showUpload === false ? (
+                                    <Image width="100%" src={imgURL} />
+                                ) :
+                                    <Upload.Dragger
+                                        listType="picture-card"
+                                        fileList={fileList}
+                                        onChange={handleUploadCoverImg}
+                                    // beforeUpload={handleBeforeUpload}
+                                    >
+                                        <p className="ant-upload-drag-icon">
+                                            <InboxOutlined />
+                                        </p>
+                                        <p className="ant-upload-text">
+                                            Hình ảnh, công thức món ăn
+                                        </p>
+                                    </Upload.Dragger>}
                             </Form.Item>
 
+                            {showUpload === false && (
+                                <Button
+                                    danger
+                                    type="primary"
+                                    className="btn-delete-img"
+                                    onClick={handleDeleteImg}
+                                >
+                                    Xóa ảnh
+                                </Button>
+                            )}
+
                             <Form.Item
-                                name="rule"
+                                name="isFree"
                             >
-                                <Checkbox>Bạn có cam kết về điều khoản cũng như hợp đồng của chúng tôi không</Checkbox>
+                                <Checkbox onChange={handleChangeCheckbox}>Món ăn miễn phí</Checkbox>
                             </Form.Item>
 
                             <div className="wrap--btn">
@@ -182,7 +250,7 @@ const FoodRegister = () => {
                                     icon={<CompassFilled />}
                                     size="large"
                                     htmlType="submit"
-                                    >
+                                >
                                     Thêm món ăn
                                 </Button>
                             </div>
