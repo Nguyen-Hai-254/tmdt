@@ -4,9 +4,12 @@ import { Button, Checkbox, Form, Image, Input, Select, Upload, message } from 'a
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { foodKindEnum } from "../utils/enum";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 const FoodRegister = () => {
+    const userInfo = useSelector((state) => state.userLogin.userInfo);
+
     const [form] = Form.useForm();
     const [isFree, setIsFree] = useState(false);
     const [imgURL, setImgURL] = useState('');
@@ -27,10 +30,10 @@ const FoodRegister = () => {
 
     const success = useCallback(() => {
         messageApi.open({
-          type: 'success',
-          content: 'Tạo món ăn thành công',
+            type: 'success',
+            content: 'Tạo món ăn thành công',
         });
-      }, [messageApi]);
+    }, [messageApi]);
 
     const handleChangeCheckbox = useCallback((e) => {
         setIsFree(e.target.checked);
@@ -52,28 +55,29 @@ const FoodRegister = () => {
     };
 
     const handleChangeImage = useCallback(async () => {
-        if(fileList.length <= 0) {
+        if (fileList.length <= 0) {
             return;
         }
         const base64 = await getBase64(fileList[0]?.originFileObj);
         setCertification(base64);
     }, [fileList])
-    const options = Object.entries(foodKindEnum).map(([value, label]) => ({ value, label }));
+    const options = Object.entries(foodKindEnum).map(([key, value]) => ({ label: value, value: value }));
     const handleRegisterFood = useCallback(async (values) => {
         const body = {
             ...values,
             isFree,
             image: certification,
         }
-        console.log(certification);
+
         const url = 'http://localhost:5000/api/food/create-food';
         const config = {
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userInfo.token}`
             },
-          };
+        };
         const response = await axios.post(url, body, config);
-        if(response?.status === 200) {
+        if (response?.status === 200) {
             form.resetFields();
             success();
         }
@@ -124,11 +128,11 @@ const FoodRegister = () => {
                                     },
                                 ]}
                             >
-                                <Select 
-                                    placeholder="Thời lượng" 
+                                <Select
+                                    placeholder="Thời lượng"
                                     options={options}
                                 />
-                                
+
                             </Form.Item>
 
                             <Form.Item
@@ -207,20 +211,20 @@ const FoodRegister = () => {
                             >
                                 {showUpload === false ? (
                                     <Image width="100%" src={imgURL} />
-                                ) : 
-                                <Upload.Dragger
-                                    listType="picture-card"
-                                    fileList={fileList}
-                                    onChange={handleUploadCoverImg}
+                                ) :
+                                    <Upload.Dragger
+                                        listType="picture-card"
+                                        fileList={fileList}
+                                        onChange={handleUploadCoverImg}
                                     // beforeUpload={handleBeforeUpload}
-                                >
-                                    <p className="ant-upload-drag-icon">
-                                        <InboxOutlined />
-                                    </p>
-                                    <p className="ant-upload-text">
-                                        Hình ảnh, công thức món ăn
-                                    </p>
-                                </Upload.Dragger>}
+                                    >
+                                        <p className="ant-upload-drag-icon">
+                                            <InboxOutlined />
+                                        </p>
+                                        <p className="ant-upload-text">
+                                            Hình ảnh, công thức món ăn
+                                        </p>
+                                    </Upload.Dragger>}
                             </Form.Item>
 
                             {showUpload === false && (
@@ -246,7 +250,7 @@ const FoodRegister = () => {
                                     icon={<CompassFilled />}
                                     size="large"
                                     htmlType="submit"
-                                    >
+                                >
                                     Thêm món ăn
                                 </Button>
                             </div>
