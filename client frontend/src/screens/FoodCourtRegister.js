@@ -4,14 +4,23 @@ import Header from "../components/Header";
 import { Button, Checkbox, Form, Input, InputNumber, Select, Upload } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { convertToBase64 } from "../utils/convert";
+import axios from 'axios';
 
 const FoodCourtRegister = () => {
     const [form] = Form.useForm();
     const [certification, setCertification] = useState("");
-    const handleRegisterFoodCourt = useCallback((values) => {
-        console.log('values', values);
-    }, [])
-
+     const handleRegisterFoodCourt = useCallback(async (values) => {
+        try {
+            const response = await axios.post('/api/courses/create-course', {
+                ...values,
+                image: certification // Gửi ảnh dưới dạng base64
+            });
+            console.log('Course created successfully', response.data);
+        } catch (error) {
+            console.error('Failed to create course', error);
+        }
+    }, [certification]);
+    
     const handleChangeImage = async (e) => {
         const base64 = await convertToBase64(e);
         setCertification(base64);
@@ -110,7 +119,7 @@ const FoodCourtRegister = () => {
 
                             <Form.Item
                                 label="Cam kết"
-                                name="commit"
+                                name="commitment"
                                 rules={[
                                     {
                                         required: true,
