@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import Loading from "../LoadingError/Loading";
-import Message from "../LoadingError/Error";
 import { NavBtnLink } from "../Navbar/NavElement";
-import { convertToBase64 } from "../utils/convert";
 import axios from 'axios';
 
 const ShopSection = (props) => {
@@ -15,6 +14,7 @@ const ShopSection = (props) => {
   const getCourseListByCategory = useCallback(async (category) => {
     try {
       const response = await axios.get(`/api/courses/get-course-by-category/${category}`);
+      console.log('Course list by category', response.data);
       return response.data; // Trả về dữ liệu thay vì gán vào state
     } catch (error) {
       console.error('Failed to get course list by category', error);
@@ -22,7 +22,7 @@ const ShopSection = (props) => {
   }, []);
 
   useEffect(() => {
-    const categories = ['monngonbamien', 'category2', 'category3']; // Danh sách các category
+    const categories = ['Món ăn ba miền', 'Món ăn đường phố', 'Món ăn cho mẹ và bé', 'Pha chế tổng hợp']; // Danh sách các category
 
     Promise.all(categories.map(category => getCourseListByCategory(category)))
       .then(results => {
@@ -47,10 +47,9 @@ const ShopSection = (props) => {
                     </div>
                   ) : 
                  (
-                  <>
-                    
+                  <>                   
                     {courseList.map((course) => (
-
+                      course && (
                       <div
                         className="shop col-lg-4 col-md-6 col-sm-6"
                         key={course._id}
@@ -61,37 +60,30 @@ const ShopSection = (props) => {
                               <img src={course.image} alt={course.name} />
                             </div>
                           </Link>
-
                           <div className="shoptext">
                             <p>
                               <Link to={`/products/${course._id}`}>
                                 {course.name}
                               </Link>
-
                             </p>
                               <p>
                                 <NavBtnLink to={''}>
                                   Time
                                 </NavBtnLink>
                               </p>
-                            <Rating
-                              value={product.rating}
-                              text={`${product.numReviews} Đánh giá`}
-                            />
                             <h3>{course.price}Đ</h3>
                             {/* <h3>{course.description}Đ</h3> */}
                           </div>
                         </div>
                       </div>
+                      )
                     ))}
                   </>
                 )}
-
                 {/* Pagination */}
                 <Pagination
-                  pages={pages}
-                  page={page}
                   keyword={keyword ? keyword : ""}
+                  pagenumber={pagenumber ? pagenumber : ""}
                 />
               </div>
             </div>

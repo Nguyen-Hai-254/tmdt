@@ -9,7 +9,7 @@ import axios from 'axios';
 const FoodCourtRegister = () => {
     const [form] = Form.useForm();
     const [certification, setCertification] = useState("");
-     const handleRegisterFoodCourt = useCallback(async (values) => {
+    const handleRegisterFoodCourt = useCallback(async (values) => {
         try {
             const response = await axios.post('/api/courses/create-course', {
                 ...values,
