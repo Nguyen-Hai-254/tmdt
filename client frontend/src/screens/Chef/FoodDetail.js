@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, Tag, Tabs, List } from 'antd';
 import { useLocation } from 'react-router-dom';
-import NavBarForChef from "../../components/Navbar/NavBarForChef";
+import NavBarForChef from "../../components/Navbar/NavBarForAdminOrChef";
 
 
 const { TabPane } = Tabs;

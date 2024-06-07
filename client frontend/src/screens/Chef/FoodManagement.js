@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Tag, Button } from 'antd';
-import NavBarForChef from "../../components/Navbar/NavBarForChef";
+import NavBarForChef from "../../components/Navbar/NavBarForAdminOrChef";
 import { getAllFoodByChef } from "../../api/ChefApi";
 import { useHistory } from 'react-router-dom';
 
