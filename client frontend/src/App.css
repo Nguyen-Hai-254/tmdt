@@ -713,8 +713,8 @@ textarea:focus {
 
 /* image slider */
 .slider {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 121, 10, 1) 54%, rgba(0, 212, 255, 1) 100%);
+  background: #EC2028;
+  background: linear-gradient(90deg, rgb(165, 164, 170) 0%, rgb(197, 89, 17) 54%, #EC2028 100%);
   position: relative;
   height: 70vh;
   display: flex;

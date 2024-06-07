@@ -24,6 +24,7 @@ import FoodCourseRegister from "./screens/FoodCourseRegister";
 import CourseManagement from "./screens/Chef/CourseManagement";
 import FoodManagement from "./screens/Chef/FoodManagement";
 import AddFoodToCourse from "./screens/AddFoodToCourse";
+import CouseDetail from "./screens/CouseDetail";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
         <PrivateRouter path="/food-course-register" component={FoodCourseRegister} />
         <PrivateRouter path="/add-food-to-course/:courseId" component={AddFoodToCourse} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
+        <PrivateRouter path="/course/:id" component={CouseDetail} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />
         <PrivateRouter path="/all-food" component={FoodManagement} />

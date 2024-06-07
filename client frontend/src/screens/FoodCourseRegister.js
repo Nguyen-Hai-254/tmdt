@@ -48,7 +48,7 @@ const FoodCourtRegister = () => {
     }, [fileList])
     const handleRegisterFoodCourt = useCallback(async (values) => {
         try {
-            const response = await axios.post('/api/courses/create-course', {
+            const response = await axios.post('/api/course/create-course', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             });

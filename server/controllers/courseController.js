@@ -182,7 +182,30 @@ class CourseController {
             })
         }
     }
+    static handleGetAllCourse = async (req, res) => {
+        try {
+            const findCourse = await Course.find({
+                active: true
+            })
 
+            const count = await Course.countDocuments({
+                active: true
+            })
+
+            return res.status(200).json({
+                message: 'OK',
+                data: {
+                    data: findCourse
+                }
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
     static handleAddFoodToCourse = async (req, res) => {
         try {
             if (!req.query._id || !req.body.foodList) {
