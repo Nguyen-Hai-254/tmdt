@@ -6,6 +6,7 @@ import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { convertToBase64 } from "../utils/convert";
 import axios from 'axios';
 
+<<<<<<< HEAD:client frontend/src/screens/FoodCourtRegister.js
 const { TextArea } = Input;
 
 const FoodCourtRegister = () => {
@@ -47,8 +48,14 @@ const FoodCourtRegister = () => {
         setCertification(base64);
     }, [fileList])
     const handleRegisterFoodCourt = useCallback(async (values) => {
+=======
+const FoodCourseRegister = () => {
+    const [form] = Form.useForm();
+    const [certification, setCertification] = useState("");
+    const handleRegisterFoodCourse = useCallback(async (values) => {
+>>>>>>> a306670c93d390c1dc0210bf2a9c74248e095170:client frontend/src/screens/FoodCourseRegister.js
         try {
-            const response = await axios.post('/api/courses/create-course', {
+            const response = await axios.post('/api/course/create-course', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             });
@@ -69,15 +76,8 @@ const FoodCourtRegister = () => {
     return (
         <>
             <Header />
-            <div className="food-court-register--wrapper">
-                <div className="container">
-                    <h2 className="food-court-register--title">Thêm khóa học </h2>
-                    <div className="food-court-register--form">
-                        <Form
-                            form={form}
-                            name="add-new-food-court"
-                            layout="vertical"
-                            onFinish={handleRegisterFoodCourt}
+            <div className="food-course-register--wrapper">
+                <erFoodCourse}
                             autoComplete="off"
                         >
                             <Form.Item
