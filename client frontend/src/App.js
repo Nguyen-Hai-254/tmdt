@@ -50,7 +50,7 @@ const App = () => {
         <PrivateRouter path="/food-register" component={FoodRegister} />
         <PrivateRouter path="/food-update" component={FoodUpdate} />
         <PrivateRouter path="/food-course-register" component={FoodCourseRegister} />
-        <PrivateRouter path="/add-food-to-course" component={AddFoodToCourse} />
+        <PrivateRouter path="/add-food-to-course/:courseId" component={AddFoodToCourse} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />
