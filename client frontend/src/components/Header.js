@@ -34,22 +34,22 @@ const Header = () => {
           <div className="row">
             <div className="col-md-6 d-flex align-items-center display-none">
               <p>0865447141</p>
-              <p>anhtheboy011@gmail.com</p>
+              <p>cookie@gmail.com</p>
             </div>
             <div className=" col-12 col-lg-6 justify-content-center justify-content-lg-end d-flex align-items-center">
-              <a href="https://www.facebook.com/toiladat.39" target="_blank" rel="noreferrer">
+              <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="https://www.instagram.com/__datmopmeodonart/" target="_blank" rel="noreferrer">
+              <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://www.youtube.com/channel/UCPs7ri32sHOqRS3C3iBxXvQ" target="_blank" rel="noreferrer">
+              <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
                 <i className="fab fa-linkedin-in"></i>
               </a>
-              <a href="https://www.youtube.com/channel/UCPs7ri32sHOqRS3C3iBxXvQ" target="_blank" rel="noreferrer">
+              <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
                 <i className="fab fa-youtube"></i>
               </a>
-              <a href="https://www.pinterest.com/anhtheboy011/_saved/" target="_blank" rel="noreferrer">
+              <a href="https://www.pinterest.com" target="_blank" rel="noreferrer">
                 <i className="fab fa-pinterest-p"></i>
               </a>
             </div>
@@ -78,7 +78,7 @@ const Header = () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                       </button>
                       <div className="dropdown-menu">
                         <Link className="dropdown-item" to="/profile">
@@ -103,7 +103,7 @@ const Header = () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
-                        <i class="fas fa-user"></i>
+                        <i className="fas fa-user"></i>
                       </button>
                       <div className="dropdown-menu">
                         <Link className="dropdown-item" to="/login">
@@ -140,11 +140,11 @@ const Header = () => {
           </div>
 
           {/* PC HEADER */}
-          <div className="pc-header" style={{padding: '0px'}}>
+          <div className="pc-header" style={{ padding: '0px' }}>
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">
                 <Link className="navbar-brand" to="/">
-                <img alt="logo" src={require('../images/Cookies.png').default} />
+                  <img alt="logo" src={require('../images/Cookies.png').default} />
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
@@ -156,8 +156,8 @@ const Header = () => {
                     onChange={(e) => setKeyword(e.target.value)}
                     style={{ backgroundColor: '#EC2028' }}
                   />
-                  <button type="submit" className="search-button" style={{backgroundColor:'#FFFFFF', color: '#EC2028'} } >
-                    Tìm kiếm 
+                  <button type="submit" className="search-button" style={{ backgroundColor: '#FFFFFF', color: '#EC2028' }} >
+                    Tìm kiếm
                   </button>
                 </form>
               </div>

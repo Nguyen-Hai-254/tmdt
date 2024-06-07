@@ -13,7 +13,7 @@ const ShopSection = (props) => {
 
   const getCourseListByCategory = useCallback(async (category) => {
     try {
-      const response = await axios.get(`/api/courses/get-course-by-category/${category}`);
+      const response = await axios.get(`/api/course/get-course-by-category/${category}`);
       console.log('Course list by category', response.data);
       return response.data; // Trả về dữ liệu thay vì gán vào state
     } catch (error) {

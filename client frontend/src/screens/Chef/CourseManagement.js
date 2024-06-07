@@ -5,7 +5,8 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { useEffect, useState } from "react";
 import { getAllCourseByChef } from "../../api/ChefApi";
 import { formatStringByThree } from "../../utils/convert";
-import NavBarForChef from "../../components/Navbar/NavBarForChef";
+import Header from "../../components/Header";
+import NavBarForAdminOrChef from "../../components/Navbar/NavBarForAdminOrChef";
 
 
 const CourseManagement = () => {
@@ -16,7 +17,6 @@ const CourseManagement = () => {
             try {
                 const res = await getAllCourseByChef();
                 setData(res.data)
-                console.log(data[0])
             } catch (e) {
                 console.log(e.error)
             }
@@ -26,18 +26,19 @@ const CourseManagement = () => {
     }, [])
 
     return (
-        <Container sx={{ backgroundColor: '#FBCFCF', maxWidth: '100% !important', padding: '0 !important' }}>
-            <NavBarForChef />
-            <Container >
-                <Box sx={{ width: '80%' }}>
-                    <Box sx={{ mt: 7 }}>
+        <Container sx={{ maxWidth: '100% !important', padding: '0 !important' }}>
+            <Header />
+            <NavBarForAdminOrChef role='Đầu bếp' />
+            <Container sx={{ backgroundColor: '#FBCFCF', maxWidth: '100% !important', mt: 0 }} >
+                <Box sx={{ width: '80%', margin: 'auto' }}>
+                    <Box sx={{ pt: 7 }}>
                         <Typography variant="h3" sx={{ fontWeight: 'bold' }}>Các khóa học đã đăng</Typography>
                         <Typography variant="body2" sx={{ mt: 2, color: '#737373', fontStyle: 'italic' }}>Tham khảo và tìm hiểu các khoá học phổ biến để đánh giá, nắm bắt nhu cầu học viên.</Typography>
                         <Typography variant="body2" sx={{ color: '#737373', fontStyle: 'italic' }}>Hoặc bạn cũng có thể tự trải nghiệm chúng</Typography>
                     </Box>
                 </Box>
 
-                <Grid container spacing={2} sx={{ width: '90%', mt: 5, background: '#fff' }}>
+                <Grid container spacing={2} sx={{ width: '90%', margin: '40px auto', background: '#fff' }}>
                     {data && data.length > 0 && data.map((course, index) => {
                         return (
                             <Grid item key={index} xs={6} sx={{ display: 'flex', pr: 2 }}>

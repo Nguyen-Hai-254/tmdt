@@ -23,6 +23,7 @@ import FoodUpdate from "./screens/FoodUpdate";
 import FoodCourseRegister from "./screens/FoodCourseRegister";
 import CourseManagement from "./screens/Chef/CourseManagement";
 import AddFoodToCourse from "./screens/AddFoodToCourse";
+import CourseManagementByAdmin from "./screens/Admin/CourseManagementByAdmin";
 
 const App = () => {
   return (
@@ -54,6 +55,9 @@ const App = () => {
         <PrivateRouter path="/order/:id" component={OrderScreen} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />
+
+        {/* admin */}
+        <PrivateRouter path="/admin/course" component={CourseManagementByAdmin} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
