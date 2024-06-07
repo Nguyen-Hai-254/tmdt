@@ -1,17 +1,54 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Header from "../components/Header";
-import { Button, Checkbox, Form, Input, InputNumber, Select, Upload } from 'antd';
+import { Button, Checkbox, Form, Input, InputNumber, Select, Upload, Image } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { convertToBase64 } from "../utils/convert";
 import axios from 'axios';
 
+const { TextArea } = Input;
+
 const FoodCourtRegister = () => {
     const [form] = Form.useForm();
     const [certification, setCertification] = useState("");
+    const [imgURL, setImgURL] = useState('');
+    const [showUpload, setShowUpload] = useState(true);
+
+    const [fileList, setFileList] = useState([]);
+
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+    const handleUploadCoverImg = ({ fileList }) => {
+        if (fileList) {
+            setFileList(fileList);
+            const imageURL = URL.createObjectURL(fileList[0].originFileObj);
+            setImgURL(imageURL);
+            setShowUpload(false);
+        }
+    };
+
+    const handleDeleteImg = () => {
+        setImgURL('');
+        setShowUpload(true);
+        setFileList([]);
+    };
+
+    const handleChangeImage = useCallback(async () => {
+        if (fileList.length <= 0) {
+            return;
+        }
+        const base64 = await getBase64(fileList[0]?.originFileObj);
+        setCertification(base64);
+    }, [fileList])
     const handleRegisterFoodCourt = useCallback(async (values) => {
         try {
-            const response = await axios.post('/api/courses/create-course', {
+            const response = await axios.post('/api/course/create-course', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             });
@@ -21,10 +58,13 @@ const FoodCourtRegister = () => {
         }
     }, [certification]);
     
-    const handleChangeImage = async (e) => {
-        const base64 = await convertToBase64(e);
-        setCertification(base64);
-    }
+    // const handleChangeImage = async (e) => {
+    //     const base64 = await convertToBase64(e);
+    //     setCertification(base64);
+    // }
+    useEffect(() => {
+        handleChangeImage()
+    }, [handleChangeImage])
 
     return (
         <>
@@ -100,7 +140,7 @@ const FoodCourtRegister = () => {
                                     },
                                 ]}
                             >
-                                <Input placeholder="Mô tả chi tiết khóa học" />
+                                <TextArea placeholder="Mô tả chi tiết khóa học" style={{height:100}} />
                             </Form.Item>
 
                             <Form.Item
@@ -135,20 +175,33 @@ const FoodCourtRegister = () => {
                                 label="Hình ảnh, công thức khóa học"
                                 name="images"
                             >
-                                <Upload.Dragger
-                                    listType="picture-card"
-                                    onChange={handleChangeImage}
-                                    
-                                >
-                                    <p className="ant-upload-drag-icon">
-                                        <InboxOutlined />
-                                    </p>
-                                    <p className="ant-upload-text">
-                                        Hình ảnh, công thức khóa học
-                                    </p>
-                                </Upload.Dragger>
+                                {showUpload === false ? (
+                                    <Image width="100%" src={imgURL} />
+                                ) :
+                                    <Upload.Dragger
+                                        listType="picture-card"
+                                        fileList={fileList}
+                                        onChange={handleUploadCoverImg}
+                                    // beforeUpload={handleBeforeUpload}
+                                    >
+                                        <p className="ant-upload-drag-icon">
+                                            <InboxOutlined />
+                                        </p>
+                                        <p className="ant-upload-text">
+                                            Hình ảnh, công thức khóa học
+                                        </p>
+                                    </Upload.Dragger>}
                             </Form.Item>
-
+                            {showUpload === false && (
+                                <Button
+                                    danger
+                                    type="primary"
+                                    className="btn-delete-img"
+                                    onClick={handleDeleteImg}
+                                >
+                                    Xóa ảnh
+                                </Button>
+                            )}
                             <Form.Item
                                 name="rule"
                             >
