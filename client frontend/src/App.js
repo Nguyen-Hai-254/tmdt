@@ -56,17 +56,15 @@ const App = () => {
         <PrivateRouter path="/food-course-register" component={FoodCourseRegister} />
         <PrivateRouter path="/add-food-to-course/:courseId" component={AddFoodToCourse} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
+        <PrivateRouter path="/course/:id" component={CouseDetail} />
 
 
         <PrivateRouter path="/chef" component={CourseManagement} />
         <PrivateRouter path="/all-food" component={FoodManagement} />
-<<<<<<< HEAD
         <PrivateRouter path="/food/:id" component={FoodDetail} />
-=======
         
         {/* admin */}
         <PrivateRouter path="/admin/course" component={CourseManagementByAdmin} />
->>>>>>> b4372bc2dbe044fcce7ed26d31cce3525784da6c
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
