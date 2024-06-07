@@ -7,11 +7,11 @@ import { register } from "../Redux/Actions/userActions";
 import { Form, Input, Radio, Button, Typography, Upload } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import { convertToBase64 } from "../utils/convert";
-import logo from "../images/logo.png";  
-import registerBackground from "../images/registerbackground.png"; 
+import logo from "../images/logo.png";
+import registerBackground from "../images/registerbackground.png";
 
 const { TextArea } = Input;
-const { Title } = Typography; 
+const { Title } = Typography;
 
 const ChefRegister = ({ location, history }) => {
     const [form] = Form.useForm();
@@ -28,13 +28,15 @@ const ChefRegister = ({ location, history }) => {
     }, [userInfo, history, redirect]);
 
     const submitHandler = async (values) => {
-        const { name, username, email, password, telephone, sex, description } = values;
+        const { name, username, email, password, telephone, sex, description, certification } = values;
         dispatch(register(name, username, email, password, telephone, sex, 'Đầu bếp', description, certification));
     };
 
     const handleChangeImage = async (e) => {
-        const base64 = await convertToBase64(e);
-        setCertification(base64);
+        console.log('this e', e)
+        // const base64 = await convertToBase64(e);
+        // setCertification(base64);
+        console.log(certification)
     }
 
     return (
@@ -42,7 +44,7 @@ const ChefRegister = ({ location, history }) => {
             <div className="register-student--container">
                 <div className="register--photo">
                     <Link to="/">
-                    <img src={logo} alt="Logo" className="register--logo" />
+                        <img src={logo} alt="Logo" className="register--logo" />
                     </Link>
                     <img src={registerBackground} alt="Register" className="register--photo-img" />
                 </div>
@@ -98,17 +100,17 @@ const ChefRegister = ({ location, history }) => {
                                 </Form.Item>
                             </div>
                             <Form.Item
-                                    name="email"
-                                    rules={[
-                                        { required: true, message: 'Vui lòng nhập email của bạn' },
-                                        { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
-                                    ]}
-                                    label="Email"
-                                    className="form-item"
+                                name="email"
+                                rules={[
+                                    { required: true, message: 'Vui lòng nhập email của bạn' },
+                                    { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
+                                ]}
+                                label="Email"
+                                className="form-item"
 
-                                >
-                                    <Input placeholder="Email" />
-                                </Form.Item>
+                            >
+                                <Input placeholder="Email" />
+                            </Form.Item>
                             <Form.Item
                                 name="description"
                                 label="Giới thiệu bản thân"
@@ -135,19 +137,28 @@ const ChefRegister = ({ location, history }) => {
                                 name="certification"
                                 label="Chứng chỉ đầu bếp"
                                 rules={[{ required: true, message: 'Vui lòng cung cấp chứng chỉ' }]}
-                                >
+                            >
                                 <Upload.Dragger
-                                    listType="picture"
-                                    accept="image/*"
-                                    valuePropName="fileList"
-                                    getValueFromEvent={handleChangeImage}
+                                    // listType="picture"
+                                    // listType="file"
+                                    // accept="image/*"
+                                    // valuePropName="certification"
+                                    // getValueFromEvent={(e) => handleChangeImage(e)}
+                                    onChange={(e) => handleChangeImage(e)}
                                 >
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        hidden
+                                        onChange={(e) => handleChangeImage(e)}
+                                    />
+
                                     <p className="ant-upload-drag-icon">
-                                    <InboxOutlined />
+                                        <InboxOutlined />
                                     </p>
                                     <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
                                 </Upload.Dragger>
-                                </Form.Item>
+                            </Form.Item>
 
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">

@@ -19,6 +19,7 @@ import StudentRegister from "./screens/Register_Student";
 import ChefRegister from "./screens/Register_Chef";
 import Register from "./screens/Register";
 import FoodRegister from "./screens/FoodRegister";
+import FoodUpdate from "./screens/FoodUpdate";
 import FoodCourtRegister from "./screens/FoodCourtRegister";
 import CourseManagement from "./screens/Chef/CourseManagement";
 
@@ -46,6 +47,7 @@ const App = () => {
         <PrivateRouter path="/payment" component={PaymentScreen} />
         <PrivateRouter path="/placeorder" component={PlaceOrderScreen} />
         <PrivateRouter path="/food-register" component={FoodRegister} />
+        <PrivateRouter path="/food-update" component={FoodUpdate} />
         <PrivateRouter path="/food-court-register" component={FoodCourtRegister} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
 

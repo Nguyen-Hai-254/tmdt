@@ -5,9 +5,12 @@ import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { foodKindEnum } from "../utils/enum";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const { TextArea } = Input;
-const FoodRegister = () => {
+
+const FoodUpdate = () => {
+    const { foodId } = useParams(); // Assuming you are using react-router-dom
     const userInfo = useSelector((state) => state.userLogin.userInfo);
 
     const [form] = Form.useForm();
@@ -16,6 +19,7 @@ const FoodRegister = () => {
     const [certification, setCertification] = useState("");
     const [showUpload, setShowUpload] = useState(true);
     const [fileList, setFileList] = useState([]);
+    const [initialValues, setInitialValues] = useState({});
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -26,18 +30,18 @@ const FoodRegister = () => {
             reader.onload = () => resolve(reader.result);
             reader.onerror = (error) => reject(error);
         });
-    }
+    };
 
     const success = useCallback(() => {
         messageApi.open({
             type: 'success',
-            content: 'Tạo món ăn thành công',
+            content: 'Cập nhật món ăn thành công',
         });
     }, [messageApi]);
 
     const handleChangeCheckbox = useCallback((e) => {
         setIsFree(e.target.checked);
-    }, [])
+    }, []);
 
     const handleUploadCoverImg = ({ fileList }) => {
         if (fileList) {
@@ -60,33 +64,66 @@ const FoodRegister = () => {
         }
         const base64 = await getBase64(fileList[0]?.originFileObj);
         setCertification(base64);
-    }, [fileList])
+    }, [fileList]);
+
     const options = Object.entries(foodKindEnum).map(([key, value]) => ({ label: value, value: value }));
-    const handleRegisterFood = useCallback(async (values) => {
+
+    const handleUpdateFood = useCallback(async (values) => {
         const body = {
             ...values,
             isFree,
             image: certification,
-        }
+        };
 
-        const url = 'http://localhost:5000/api/food/create-food';
+        const url = `http://localhost:5000/api/food/update-food-by-chef?_id=${foodId}`;
         const config = {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${userInfo.token}`
             },
         };
-        const response = await axios.post(url, body, config);
+        const response = await axios.put(url, body, config);
         if (response?.status === 200) {
-            form.resetFields();
             success();
         }
+    }, [certification, foodId, isFree, success, userInfo.token]);
 
-    }, [certification, form, isFree, success])
+    const fetchFoodData = useCallback(async () => {
+        const url = `http://localhost:5000/api/food/get-food-by-chef?_id=${foodId}`;
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${userInfo.token}`
+            },
+        };
+        const response = await axios.get(url, config);
+        console.log("here1");
+        if (response?.status === 200) {
+            console.log("trueeeeee");
+            const foodData = response.data.data;
+            setInitialValues({
+                name: foodData.name,
+                kind: foodData.kind,
+                time: foodData.time,
+                description: foodData.description,
+                ingredient: foodData.ingredient,
+                processing: foodData.processing,
+                make: foodData.make,
+                isFree: foodData.isFree
+            });
+            setImgURL(foodData.image);
+            setShowUpload(!foodData.image);
+            setIsFree(foodData.isFree);
+        }
+    }, [foodId, userInfo.token]);
 
     useEffect(() => {
-        handleChangeImage()
-    }, [handleChangeImage])
+        handleChangeImage();
+    }, [handleChangeImage]);
+
+    useEffect(() => {
+        fetchFoodData();
+    }, [fetchFoodData]);
 
     return (
         <>
@@ -94,14 +131,15 @@ const FoodRegister = () => {
             <Header />
             <div className="food-register--wrapper">
                 <div className="container">
-                    <h2 className="food-register--title">Thêm món ăn</h2>
+                    <h2 className="food-register--title">Cập nhật món ăn</h2>
                     <div className="food-register--form">
                         <Form
                             form={form}
-                            name="add-new-food"
+                            name="update-food"
                             layout="vertical"
-                            onFinish={handleRegisterFood}
+                            onFinish={handleUpdateFood}
                             autoComplete="off"
+                            initialValues={initialValues}
                         >
                             <Form.Item
                                 label="Tên món ăn"
@@ -109,8 +147,7 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập tên món ăn',
+                                        message: 'Vui lòng nhập tên món ăn',
                                     },
                                 ]}
                             >
@@ -123,16 +160,14 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập loại món ăn',
+                                        message: 'Vui lòng nhập loại món ăn',
                                     },
                                 ]}
                             >
                                 <Select
-                                    placeholder="Loại món ăn" 
+                                    placeholder="Loại món ăn"
                                     options={options}
                                 />
-
                             </Form.Item>
 
                             <Form.Item
@@ -141,8 +176,7 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng chọn thời lượng',
+                                        message: 'Vui lòng chọn thời lượng',
                                     },
                                 ]}
                             >
@@ -155,12 +189,11 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập mô tả chi tiết món ăn',
+                                        message: 'Vui lòng nhập mô tả chi tiết món ăn',
                                     },
                                 ]}
                             >
-                                <TextArea placeholder="Mô tả chi tiết món ăn" style={{height:100}}/>
+                                <TextArea placeholder="Mô tả chi tiết món ăn" style={{ height: 100 }} />
                             </Form.Item>
 
                             <Form.Item
@@ -169,12 +202,11 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập nguyên liệu',
+                                        message: 'Vui lòng nhập nguyên liệu',
                                     },
                                 ]}
                             >
-                                <TextArea placeholder="Nguyên liệu" style={{height:100}}/>
+                                <TextArea placeholder="Nguyên liệu" style={{ height: 100 }} />
                             </Form.Item>
 
                             <Form.Item
@@ -183,12 +215,11 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập cách chế biến món ăn',
+                                        message: 'Vui lòng nhập cách chế biến món ăn',
                                     },
                                 ]}
                             >
-                                <TextArea placeholder="Cách chế biến" style={{height:100}}/>
+                                <TextArea placeholder="Cách chế biến" style={{ height: 100 }} />
                             </Form.Item>
 
                             <Form.Item
@@ -197,12 +228,11 @@ const FoodRegister = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message:
-                                            'Vui lòng nhập cách thực hiện món ăn',
+                                        message: 'Vui lòng nhập cách thực hiện món ăn',
                                     },
                                 ]}
                             >
-                                <TextArea placeholder="Thực hiện món ăn" style={{height:100}}/>
+                                <TextArea placeholder="Thực hiện món ăn" style={{ height: 100 }} />
                             </Form.Item>
 
                             <Form.Item
@@ -211,12 +241,11 @@ const FoodRegister = () => {
                             >
                                 {showUpload === false ? (
                                     <Image width="100%" src={imgURL} />
-                                ) :
+                                ) : (
                                     <Upload.Dragger
                                         listType="picture-card"
                                         fileList={fileList}
                                         onChange={handleUploadCoverImg}
-                                    // beforeUpload={handleBeforeUpload}
                                     >
                                         <p className="ant-upload-drag-icon">
                                             <InboxOutlined />
@@ -224,7 +253,8 @@ const FoodRegister = () => {
                                         <p className="ant-upload-text">
                                             Hình ảnh, công thức món ăn
                                         </p>
-                                    </Upload.Dragger>}
+                                    </Upload.Dragger>
+                                )}
                             </Form.Item>
 
                             {showUpload === false && (
@@ -240,6 +270,7 @@ const FoodRegister = () => {
 
                             <Form.Item
                                 name="isFree"
+                                valuePropName="checked"
                             >
                                 <Checkbox onChange={handleChangeCheckbox}>Món ăn miễn phí</Checkbox>
                             </Form.Item>
@@ -251,16 +282,15 @@ const FoodRegister = () => {
                                     size="large"
                                     htmlType="submit"
                                 >
-                                    Thêm món ăn
+                                    Cập nhật món ăn
                                 </Button>
                             </div>
-
                         </Form>
                     </div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default FoodRegister;
+export default FoodUpdate;
