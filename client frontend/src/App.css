@@ -1125,4 +1125,24 @@ textarea:focus {
   max-height: 100vh;
 }
 
+/* AddFoodToCourse */
+.add-food-to-course--wrapper {
+  padding: 20px;
+}
+
+.add-food-to-course--title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-food-to-course--form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wrap--btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
 /* //////////////// */
