@@ -1146,3 +1146,69 @@ textarea:focus {
 }
 
 /* //////////////// */
+
+/* Food Management */
+.food-management-container {
+  padding: 20px;
+  background-color: #FBCFCF; 
+}
+
+.food-card {
+  border-radius: 8px; 
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px); 
+}
+
+.food-card img {
+  height: 200px; 
+  object-fit: cover; 
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.food-card p {
+  margin: 0; 
+  padding: 5px 0; 
+  color: #595959; 
+}
+
+.food-card strong {
+  color: #262626; 
+}
+.food-details {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space items evenly */
+  align-items: flex-start; /* Align items at the start */
+}
+.food-kind,
+.food-is-free,
+.food-time {
+    flex: 1; 
+    margin-right: 10px; 
+}
+
+.button-detail .ant-btn{
+    margin-left: auto; 
+    height: 42px;
+    background-color: #EC2028;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 20px;
+}
+.food-is-free .ant-tag {
+  border-radius: 4px;
+  margin-left: 4px;
+}
+.food-kind p {
+
+  color: #1890ff; 
+}
+
+.food-time p {
+  color: #52c41a; 
+}
+/* //////////////// */

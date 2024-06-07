@@ -22,6 +22,7 @@ import FoodRegister from "./screens/FoodRegister";
 import FoodUpdate from "./screens/FoodUpdate";
 import FoodCourseRegister from "./screens/FoodCourseRegister";
 import CourseManagement from "./screens/Chef/CourseManagement";
+import FoodManagement from "./screens/Chef/FoodManagement";
 import AddFoodToCourse from "./screens/AddFoodToCourse";
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
         <PrivateRouter path="/order/:id" component={OrderScreen} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />
+        <PrivateRouter path="/all-food" component={FoodManagement} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

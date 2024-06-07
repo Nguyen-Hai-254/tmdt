@@ -20,3 +20,16 @@ export const getAllCourseByChef = async () => {
     return res.data;
 
 }
+
+export const getAllFoodByChef = async () => {
+    const res = await axios({
+        method: "get",
+        headers: {
+            'Authorization': userInfo.token ? `Bearer ${userInfo.token}` : ''
+        },
+        url: `${domain}/api/food/get-all-food-by-chef`,
+    })
+
+    return res.data;
+
+}

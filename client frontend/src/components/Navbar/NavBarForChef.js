@@ -11,11 +11,14 @@ const NavBarForChef = () => {
             <Link to='/chef'>
                 <Typography variant="h5" sx={{ color: '#737373' }}>Khóa học của tôi</Typography>
             </Link>
-            <Link to='/'>
+            <Link to='/food-course-register'>
                 <Typography variant="h5" sx={{ color: '#737373' }}>Đăng khóa học</Typography>
             </Link>
             <Link to='/food-register'>
                 <Typography variant="h5" sx={{ color: '#737373' }}>Đăng món ăn</Typography>
+            </Link>
+            <Link to='/all-food'>
+                <Typography variant="h5" sx={{ color: '#737373' }}>Món ăn của tôi</Typography>
             </Link>
         </Box>
     )
