@@ -15,7 +15,7 @@ const HomeScreen = ({ match }) => {
     <div>
       <Header />
       <Navbar/>
-      <ImageSlider />
+      <ImageSlider style={{ paddingBottom: '100px' }} />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
       <CalltoActionSection />
       <ContactInfo />
