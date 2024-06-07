@@ -29,15 +29,8 @@ const FoodCourseRegister = () => {
     return (
         <>
             <Header />
-            <div className="food-court-register--wrapper">
-                <div className="container">
-                    <h2 className="food-court-register--title">Thêm khóa học </h2>
-                    <div className="food-court-register--form">
-                        <Form
-                            form={form}
-                            name="add-new-food-court"
-                            layout="vertical"
-                            onFinish={handleRegisterFoodCourt}
+            <div className="food-course-register--wrapper">
+                <erFoodCourse}
                             autoComplete="off"
                         >
                             <Form.Item
