@@ -1212,3 +1212,65 @@ textarea:focus {
   color: #52c41a; 
 }
 /* //////////////// */
+
+
+/* Food Detail */
+.food-detail-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #FBCFCF;
+  min-height: 100vh;
+}
+.food-detail-top{
+  display: flex;
+  flex-direction: row;
+}
+.food-detail-card {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-card-head-title{
+  font-size: x-large;
+}
+.food-detail-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.food-detail-image {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+.food-detail-extra {
+  width: 50%;
+  margin-left: 20px; 
+}
+
+.food-detail-extra p {
+  margin: 0;
+  padding: 5px 0;
+  color: #595959;
+}
+
+.food-detail-extra strong {
+  color: #262626;
+}
+.food-detail-extra .food-kind,
+.food-detail-extra .food-is-free
+ {
+  margin-bottom: 16px;
+}
+.food-detail-extra .food-kind p {
+
+  color: #1890ff; 
+}
+.food-detail-extra .food-time p {
+  color: #52c41a; 
+}
+/* //////////////// */

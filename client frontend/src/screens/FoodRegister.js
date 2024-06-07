@@ -210,7 +210,7 @@ const FoodRegister = () => {
                                 name="image"
                             >
                                 {showUpload === false ? (
-                                    <Image width="100%" src={imgURL} />
+                                    <Image width="60%" src={imgURL} />
                                 ) :
                                     <Upload.Dragger
                                         listType="picture-card"

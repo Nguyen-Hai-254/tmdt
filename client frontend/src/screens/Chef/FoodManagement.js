@@ -2,9 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Tag, Button } from 'antd';
 import NavBarForChef from "../../components/Navbar/NavBarForChef";
 import { getAllFoodByChef } from "../../api/ChefApi";
+import { useHistory } from 'react-router-dom';
 
 
-const FoodCard = ({ data }) => (
+
+const FoodCard = ({ data }) => {
+    const history = useHistory();
+
+    const handleDetailClick = () => {
+        history.push({
+            pathname: `/food/${data._id}`,
+            state: { food: data }
+        });
+    };
+    return(
     <Card
         title={data.name}
         cover={<img alt={data.name} src={data.image} />}
@@ -13,25 +24,26 @@ const FoodCard = ({ data }) => (
         <div className="food-details">
             <div className="detail-info">
                 <div className="food-kind">
-                    <p><strong>Kind:</strong> {data.kind}</p>
+                    <p><strong>Loại món ăn:</strong> {data.kind}</p>
                 </div>
                 <div className="food-is-free">
-                    <p><strong>Is Free:</strong> 
+                    <p><strong>Miễn phí:</strong> 
                     <Tag color={data.isFree ? "green" : "red"}>
-                        {data.isFree ? "Yes" : "No"}
+                        {data.isFree ? "Có" : "Không"}
                     </Tag>
                     </p>
                 </div>
                 <div className="food-time">
-                    <p><strong>Time:</strong> {data.time}</p>
+                    <p><strong>Thời lượng:</strong> {data.time}</p>
                 </div>
             </div>
             <div className="button-detail">
-                <Button type='primary'>Chi tiết</Button>
+                <Button type='primary' onClick={handleDetailClick}>Chi tiết</Button>
             </div>
         </div>
     </Card>
 );
+};
 
 
 const FoodManagement = () => {
@@ -52,7 +64,6 @@ const FoodManagement = () => {
 
     return (
         <>
-        {console.log(data)}
             <NavBarForChef />
             <div className="food-management-container">
                 <Row gutter={[16, 16]}>
