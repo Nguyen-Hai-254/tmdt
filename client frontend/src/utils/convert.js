@@ -9,3 +9,10 @@ export const convertToBase64 = async (file) => {
         reader.onerror = error => reject(error);
     })
 }
+
+export const formatStringByThree = (str) => {
+    return str.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+}
