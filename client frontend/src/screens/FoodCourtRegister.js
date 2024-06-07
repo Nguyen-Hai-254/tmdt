@@ -11,13 +11,13 @@ const FoodCourtRegister = () => {
     const [certification, setCertification] = useState("");
     const handleRegisterFoodCourt = useCallback(async (values) => {
         try {
-            const response = await axios.post('/api/courses/create-course', {
+            const response = await axios.post('/api/court/create-court', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             });
-            console.log('Course created successfully', response.data);
+            console.log('Court created successfully', response.data);
         } catch (error) {
-            console.error('Failed to create course', error);
+            console.error('Failed to create court', error);
         }
     }, [certification]);
     
