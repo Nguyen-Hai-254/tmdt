@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Tag, Button } from 'antd';
-import NavBarForChef from "../../components/Navbar/NavBarForChef";
 import { getAllFoodByChef } from "../../api/ChefApi";
+<<<<<<< HEAD
 import { useHistory } from 'react-router-dom';
+=======
+import NavBarForAdminOrChef from '../../components/Navbar/NavBarForAdminOrChef';
+import Header from '../../components/Header';
+>>>>>>> b4372bc2dbe044fcce7ed26d31cce3525784da6c
 
 
 
@@ -27,10 +31,17 @@ const FoodCard = ({ data }) => {
                     <p><strong>Loại món ăn:</strong> {data.kind}</p>
                 </div>
                 <div className="food-is-free">
+<<<<<<< HEAD
                     <p><strong>Miễn phí:</strong> 
                     <Tag color={data.isFree ? "green" : "red"}>
                         {data.isFree ? "Có" : "Không"}
                     </Tag>
+=======
+                    <p><strong>Is Free:</strong>
+                        <Tag color={data.isFree ? "green" : "red"}>
+                            {data.isFree ? "Yes" : "No"}
+                        </Tag>
+>>>>>>> b4372bc2dbe044fcce7ed26d31cce3525784da6c
                     </p>
                 </div>
                 <div className="food-time">
@@ -64,7 +75,12 @@ const FoodManagement = () => {
 
     return (
         <>
+<<<<<<< HEAD
             <NavBarForChef />
+=======
+            <Header />
+            <NavBarForAdminOrChef role='Đầu bếp' />
+>>>>>>> b4372bc2dbe044fcce7ed26d31cce3525784da6c
             <div className="food-management-container">
                 <Row gutter={[16, 16]}>
                     {data.map(food => (

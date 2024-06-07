@@ -8,7 +8,7 @@ import { Button, Typography } from 'antd';
 import { MailOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
 
-const { Title, Text } = Typography; 
+const { Title, Text } = Typography;
 const Login = ({ location, history }) => {
   window.scrollTo(0, 0);
   const [email, setEmail] = useState("");
@@ -23,7 +23,13 @@ const Login = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push(redirect);
+      if (redirect === '/' && userInfo.role === 'Đầu bếp') {
+        history.push('/chef')
+      }
+      else if (redirect === '/' && userInfo.role === 'Admin') {
+        history.push('/admin/course')
+      }
+      else { history.push(redirect); }
     }
   }, [userInfo, history, redirect]);
 
@@ -78,7 +84,7 @@ const Login = ({ location, history }) => {
                   {showPassword ? <EyeOutlined onClick={() => setShowPassword(!showPassword)} /> : <EyeInvisibleOutlined onClick={() => setShowPassword(!showPassword)} />}
                 </p>
               </div>
-              <Button 
+              <Button
                 type="primary"
                 size="large"
                 htmlType="submit"
