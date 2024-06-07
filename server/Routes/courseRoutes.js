@@ -14,6 +14,6 @@ courseRouter.post('/add-food-to-course', protect, CourseController.handleAddFood
 //user
 courseRouter.get('/get-course-by-id', CourseController.handleGetCourseById);
 courseRouter.get('/get-course-by-category', CourseController.handleGetCourseByCategory);
-
+courseRouter.get('/get-all-course', CourseController.handleGetAllCourse);
 
 export default courseRouter;

@@ -11,30 +11,22 @@ const ShopSection = (props) => {
   const { keyword, pagenumber } = props;
   const [courseList, setCourseList] = useState([]);
 
-  const getCourseListByCategory = useCallback(async (category) => {
+  const getCourseListByCategory = useCallback(async () => {
     try {
-      const response = await axios.get(`/api/course/get-course-by-category/${category}`);
-      console.log('Course list by category', response.data);
-      return response.data; // Trả về dữ liệu thay vì gán vào state
+      const response = await axios.get(`/api/course/get-all-course`);
+      console.log('Course list by category', response.data.data);
+      setCourseList(response.data.data); // Gán response vào state variable
     } catch (error) {
       console.error('Failed to get course list by category', error);
     }
   }, []);
 
   useEffect(() => {
-    const categories = ['Món ăn ba miền', 'Món ăn đường phố', 'Món ăn cho mẹ và bé', 'Pha chế tổng hợp']; // Danh sách các category
-
-    Promise.all(categories.map(category => getCourseListByCategory(category)))
-      .then(results => {
-        // results là một mảng chứa kết quả của tất cả các Promise
-        // Mỗi phần tử trong results tương ứng với kết quả của một Promise
-        // Gộp tất cả các kết quả lại thành một mảng duy nhất và gán vào state
-        setCourseList(results.flat());
-      });
+    getCourseListByCategory();
   }, [getCourseListByCategory]);
+  const courseArray = Object.values(courseList);
   return (
     <>
-      
       <div className="container">
         <div className="section">
           <div className="row">
@@ -48,11 +40,12 @@ const ShopSection = (props) => {
                   ) : 
                  (
                   <>                   
-                    {courseList.map((course) => (
+                    {courseArray[0].map((course) => (
                       course && (
                       <div
                         className="shop col-lg-4 col-md-6 col-sm-6"
                         key={course._id}
+                        style={{ border: '4px solid #EC2028' }}
                       >
                         <div className="border-product">
                           <Link to={`/products/${course._id}`}>
@@ -60,17 +53,19 @@ const ShopSection = (props) => {
                               <img src={course.image} alt={course.name} />
                             </div>
                           </Link>
-                          <div className="shoptext">
+                          <div className="shoptext"
+                          style={{ marginTop: '10px', marginBottom: '10px' }}
+                          >
                             <p>
-                              <Link to={`/products/${course._id}`}>
+                              <Link to={`/products/${course._id}`} style={{ marginTop: '10px', marginBottom: '10px' }}>
                                 {course.name}
                               </Link>
                             </p>
-                              <p>
+                            <p>
                                 <NavBtnLink to={''}>
-                                  Time
+                                  {course.time}
                                 </NavBtnLink>
-                              </p>
+                            </p>
                             <h3>{course.price}Đ</h3>
                             {/* <h3>{course.description}Đ</h3> */}
                           </div>

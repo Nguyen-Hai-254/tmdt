@@ -1,10 +1,10 @@
 import { useCallback, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import Header from "../components/Header";
-import { Button, Checkbox, Form, Input, InputNumber, Select, Upload, Image } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Upload, Image } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
-import { convertToBase64 } from "../utils/convert";
 import axios from 'axios';
+import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
 
 const { TextArea } = Input;
 
@@ -69,6 +69,7 @@ const FoodCourtRegister = () => {
     return (
         <>
             <Header />
+            <NavBarForAdminOrChef role='Đầu bếp' />
             <div className="food-court-register--wrapper">
                 <div className="container">
                     <h2 className="food-court-register--title">Thêm khóa học </h2>

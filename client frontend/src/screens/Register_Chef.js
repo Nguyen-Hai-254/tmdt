@@ -6,7 +6,6 @@ import Loading from "../components/LoadingError/Loading";
 import { register } from "../Redux/Actions/userActions";
 import { Form, Input, Radio, Button, Typography, Upload } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { convertToBase64 } from "../utils/convert";
 import logo from "../images/logo.png";
 import registerBackground from "../images/registerbackground.png";
 

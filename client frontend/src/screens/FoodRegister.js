@@ -5,6 +5,7 @@ import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { foodKindEnum } from "../utils/enum";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
 
 const { TextArea } = Input;
 const FoodRegister = () => {
@@ -92,6 +93,7 @@ const FoodRegister = () => {
         <>
             {contextHolder}
             <Header />
+            <NavBarForAdminOrChef role='Đầu bếp' />
             <div className="food-register--wrapper">
                 <div className="container">
                     <h2 className="food-register--title">Thêm món ăn</h2>
