@@ -6,18 +6,18 @@ import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import { convertToBase64 } from "../utils/convert";
 import axios from 'axios';
 
-const FoodCourtRegister = () => {
+const FoodCourseRegister = () => {
     const [form] = Form.useForm();
     const [certification, setCertification] = useState("");
-    const handleRegisterFoodCourt = useCallback(async (values) => {
+    const handleRegisterFoodCourse = useCallback(async (values) => {
         try {
-            const response = await axios.post('/api/court/create-court', {
+            const response = await axios.post('/api/course/create-course', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             });
-            console.log('Court created successfully', response.data);
+            console.log('Course created successfully', response.data);
         } catch (error) {
-            console.error('Failed to create court', error);
+            console.error('Failed to create course', error);
         }
     }, [certification]);
     
