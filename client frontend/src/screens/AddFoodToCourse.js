@@ -11,8 +11,8 @@ const AddFoodToCourse = ({ match }) => {
 
   const fetchFoods = async (query) => {
     try {
-      const response = await axios.get(`/api/food/search?query=${query}`);
-      setSearchResults(response.data);
+      const response = await axios.get(`/api/food/search-food-by-chef`, { params: { keyword: query } });
+      setSearchResults(response.data.data);
     } catch (error) {
       console.error('Failed to fetch foods', error);
     }

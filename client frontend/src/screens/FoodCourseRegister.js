@@ -120,14 +120,7 @@ const FoodCourtRegister = () => {
                                     },
                                 ]}
                             >
-                                <Select 
-                                    placeholder="Thời lượng" 
-                                    options={[
-                                        { value: 'jack', label: 'Jack' },
-                                        { value: 'lucy', label: 'Lucy' },
-                                        { value: 'Yiminghe', label: 'yiminghe' },
-                                    ]}
-                                />
+                                <Input placeholder="Thời lượng" />
                             </Form.Item>
 
                             <Form.Item
