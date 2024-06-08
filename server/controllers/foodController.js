@@ -144,7 +144,7 @@ class FoodController {
 
     static handleSearchFoodByChef = async (req, res) => {
         try {
-            const keyword = req.body.keyword
+            const keyword = req.query.keyword
 
             if (keyword) {
                 const findFood = await Food.find({
