@@ -39,6 +39,7 @@ export const navbarForChef = [
         url: '/food-register'
     }
 ]
+
 export const navbarUser = [
     {
         name: 'Trang chủ',
