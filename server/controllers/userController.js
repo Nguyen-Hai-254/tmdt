@@ -8,7 +8,7 @@ class UserController {
     static handleRegister = async (req, res) => {
         try {
             const { name, username, email, password, telephone, sex, role, description, certification } = req.body;
-            console.log('this', certification)
+
             if (!name || !username || !email || !password || !telephone) {
                 return res.status(404).json({
                     message: 'Missing input parameter!'

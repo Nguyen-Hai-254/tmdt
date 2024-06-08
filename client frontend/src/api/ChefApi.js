@@ -1,11 +1,8 @@
 import axios from "axios";
-// import { useSelector } from "react-redux";
 import store from '../Redux/store.js'
 
 const domain = `http://localhost:${5000}`;
-// const userInfo = useSelector((state) => state.userLogin.userInfo);
 const userInfo = store.getState().userLogin.userInfo;
-
 
 
 export const getAllCourseByChef = async () => {
@@ -18,5 +15,31 @@ export const getAllCourseByChef = async () => {
     })
 
     return res.data;
+}
 
+export const getAllFoodByChef = async () => {
+    const res = await axios({
+        method: "get",
+        headers: {
+            'Authorization': userInfo.token ? `Bearer ${userInfo.token}` : ''
+        },
+        url: `${domain}/api/food/get-all-food-by-chef`,
+    })
+
+    return res.data;
+}
+
+export const getCoursByChef = async (courseId) => {
+    const res = await axios({
+        method: "get",
+        headers: {
+            'Authorization': userInfo.token ? `Bearer ${userInfo.token}` : ''
+        },
+        params: {
+            _id: courseId
+        },
+        url: `${domain}/api/course/get-course-by-chef`,
+    })
+
+    return res.data;
 }

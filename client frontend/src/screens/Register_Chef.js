@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
 import { register } from "../Redux/Actions/userActions";
-import { Form, Input, Radio, Button, Typography, Upload } from "antd";
+import { Form, Input, Radio, Button, Typography, Upload, Image} from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-import { convertToBase64 } from "../utils/convert";
 import logo from "../images/logo.png";
 import registerBackground from "../images/registerbackground.png";
 
@@ -15,29 +14,65 @@ const { Title } = Typography;
 
 const ChefRegister = ({ location, history }) => {
     const [form] = Form.useForm();
-    const [certification, setCertification] = useState("");
     const dispatch = useDispatch();
     const redirect = location.search ? location.search.split("=")[1] : "/";
     const userRegister = useSelector((state) => state.userRegister);
     const { error, loading, userInfo } = userRegister;
+    const [certification, setCertification] = useState("");
+    const [imgURL, setImgURL] = useState('');
+    const [showUpload, setShowUpload] = useState(true);
+    const [fileList, setFileList] = useState([]);
 
+    const getBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+
+    const handleUploadCoverImg = ({ fileList }) => {
+        if (fileList) {
+            setFileList(fileList);
+            const imageURL = URL.createObjectURL(fileList[0].originFileObj);
+            setImgURL(imageURL);
+            setShowUpload(false);
+        }
+    };
+
+    const handleDeleteImg = () => {
+        setImgURL('');
+        setShowUpload(true);
+        setFileList([]);
+    };
+
+    const handleChangeImage = useCallback(async () => {
+        if (fileList.length <= 0) {
+            return;
+        }
+        const base64 = await getBase64(fileList[0]?.originFileObj);
+        setCertification(base64);
+    }, [fileList])
     useEffect(() => {
         if (userInfo) {
             history.push(redirect);
         }
-    }, [userInfo, history, redirect]);
+        handleChangeImage()
+
+    }, [userInfo, history, redirect, handleChangeImage]);
 
     const submitHandler = async (values) => {
         const { name, username, email, password, telephone, sex, description, certification } = values;
         dispatch(register(name, username, email, password, telephone, sex, 'Đầu bếp', description, certification));
     };
 
-    const handleChangeImage = async (e) => {
-        console.log('this e', e)
-        // const base64 = await convertToBase64(e);
-        // setCertification(base64);
-        console.log(certification)
-    }
+    // const handleChangeImage = async (e) => {
+    //     console.log('this e', e)
+    //     // const base64 = await convertToBase64(e);
+    //     // setCertification(base64);
+    //     console.log(certification)
+    // }
 
     return (
         <>
@@ -138,26 +173,20 @@ const ChefRegister = ({ location, history }) => {
                                 label="Chứng chỉ đầu bếp"
                                 rules={[{ required: true, message: 'Vui lòng cung cấp chứng chỉ' }]}
                             >
+                                {showUpload === false ? (
+                                    <Image style={{width:"60%"}} src={imgURL} />
+                                ) :
                                 <Upload.Dragger
-                                    // listType="picture"
-                                    // listType="file"
-                                    // accept="image/*"
-                                    // valuePropName="certification"
-                                    // getValueFromEvent={(e) => handleChangeImage(e)}
-                                    onChange={(e) => handleChangeImage(e)}
+                                    listType="picture-card"
+                                    fileList={fileList}
+                                    onChange={handleUploadCoverImg}
                                 >
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        hidden
-                                        onChange={(e) => handleChangeImage(e)}
-                                    />
 
                                     <p className="ant-upload-drag-icon">
                                         <InboxOutlined />
                                     </p>
                                     <p className="ant-upload-text">Nhấp hoặc kéo tệp vào khu vực này để tải lên</p>
-                                </Upload.Dragger>
+                                </Upload.Dragger>}
                             </Form.Item>
 
                             <Form.Item>

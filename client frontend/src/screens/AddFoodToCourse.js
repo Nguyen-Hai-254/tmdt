@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, List, Avatar, message } from 'antd';
 import axios from 'axios';
 import Header from "../components/Header";
+import { useSelector } from 'react-redux';
+import { getCoursByChef } from '../api/ChefApi';
 
 const AddFoodToCourse = ({ match }) => {
   const [form] = Form.useForm();
@@ -9,10 +11,22 @@ const AddFoodToCourse = ({ match }) => {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
+
   const fetchFoods = async (query) => {
     try {
-      const response = await axios.get(`/api/food/search?query=${query}`);
-      setSearchResults(response.data);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${userInfo.token}`
+        },
+        params: {
+          keyword: query
+        }
+      };
+
+      const response = await axios.get(`/api/food/search-food-by-chef`, config);
+      setSearchResults(response.data.data);
     } catch (error) {
       console.error('Failed to fetch foods', error);
     }
@@ -53,14 +67,34 @@ const AddFoodToCourse = ({ match }) => {
 
   const handleSubmit = async () => {
     try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${userInfo.token}`
+        }
+      };
+
       const response = await axios.post(`/api/course/add-food-to-course?_id=${match.params.courseId}`, {
         foodList: selectedFoods.map(food => food._id)
-      });
+      }, config);
       message.success('Đã thêm món ăn vào khóa học thành công');
     } catch (error) {
       message.error('Thêm món ăn vào khóa học thất bại');
     }
   };
+
+  useEffect(() => {
+    const fetchApi = async (courseId) => {
+      try {
+        const res = await getCoursByChef(courseId);
+        setSelectedFoods(res.data.foodList)
+      } catch (e) {
+        console.error(e.message)
+      }
+    }
+
+    fetchApi(match.params.courseId);
+  }, [])
 
   return (
     <>

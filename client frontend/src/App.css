@@ -713,8 +713,8 @@ textarea:focus {
 
 /* image slider */
 .slider {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 121, 10, 1) 54%, rgba(0, 212, 255, 1) 100%);
+  background: #EC2028;
+  background: linear-gradient(90deg, rgb(165, 164, 170) 0%, rgb(197, 89, 17) 54%, #EC2028 100%);
   position: relative;
   height: 70vh;
   display: flex;
@@ -854,11 +854,11 @@ textarea:focus {
 }
 
 .food-course-register--form {
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   background-color: #fff;
-  padding: 30px 60px;
+  padding: 20px 40px;
   box-sizing: border-box;
   border-radius: 8px;
   box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
@@ -879,14 +879,14 @@ textarea:focus {
 
 .food-course-register--form .ant-input {
   width: 100%;
-  height: 36px;
+  height: 30px;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .food-course-register--form .ant-select-selector {
-  height: 36px !important;
-  font-size: 16px;
+  height: 30px !important;
+  font-size: 14px;
   font-weight: 500;
 
 }
@@ -897,12 +897,12 @@ textarea:focus {
 
 .food-course-register--form .ant-checkbox-wrapper span {
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .food-course-register--form .ant-btn {
   width: 100%;
-  height: 40px;
+  height: 36px;
   background-color: #EC2028;
 }
 
@@ -910,7 +910,10 @@ textarea:focus {
   width: 60%;
   margin: 0 auto;
 }
-
+.food-course-register--form .btn-delete-img { 
+  width: 80px !important;
+  float: right;
+}
 /* //////////////// */
 
 /* Register */
@@ -1144,5 +1147,146 @@ textarea:focus {
   text-align: center;
   margin-top: 20px;
 }
+
+/* //////////////// */
+
+/* Food Management */
+.food-management-container {
+  padding: 20px;
+  background-color: #FBCFCF; 
+}
+
+.food-card {
+  border-radius: 8px; 
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-5px); 
+}
+
+.food-card img {
+  height: 200px; 
+  object-fit: cover; 
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.food-card p {
+  margin: 0; 
+  padding: 5px 0; 
+  color: #595959; 
+}
+
+.food-card strong {
+  color: #262626; 
+}
+.food-details {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space items evenly */
+  align-items: flex-start; /* Align items at the start */
+}
+.food-kind,
+.food-is-free,
+.food-time {
+    flex: 1; 
+    margin-right: 10px; 
+}
+
+.button-detail .ant-btn{
+    margin-left: auto; 
+    height: 42px;
+    background-color: #EC2028;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    border-radius: 20px;
+}
+.food-is-free .ant-tag {
+  border-radius: 4px;
+  margin-left: 4px;
+}
+.food-kind p {
+
+  color: #1890ff; 
+}
+
+.food-time p {
+  color: #52c41a; 
+}
+/* //////////////// */
+
+
+/* Food Detail */
+.food-detail-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: #FBCFCF;
+  min-height: 100vh;
+}
+.food-detail-top{
+  display: flex;
+  flex-direction: row;
+}
+.food-detail-card {
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ant-card-head-title{
+  font-size: x-large;
+}
+.food-detail-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.food-detail-image {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+.food-detail-extra {
+  width: 50%;
+  margin-left: 20px; 
+}
+
+.food-detail-extra p {
+  margin: 0;
+  padding: 5px 0;
+  color: #595959;
+}
+
+.food-detail-extra strong {
+  color: #262626;
+}
+.food-detail-extra .food-kind,
+.food-detail-extra .food-is-free
+ {
+  margin-bottom: 16px;
+}
+.food-detail-extra .food-kind p {
+
+  color: #1890ff; 
+}
+.food-detail-extra .food-time p {
+  color: #52c41a; 
+}
+
+/* CourseList */
+.course-list-page {
+  padding: 20px;
+}
+
+.course-list-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
 
 /* //////////////// */
