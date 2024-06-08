@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, List, Avatar, message } from 'antd';
 import axios from 'axios';
 import Header from "../components/Header";
+import { useSelector } from 'react-redux';
 
 const AddFoodToCourse = ({ match }) => {
   const [form] = Form.useForm();
@@ -9,9 +10,21 @@ const AddFoodToCourse = ({ match }) => {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
+
   const fetchFoods = async (query) => {
     try {
-      const response = await axios.get(`/api/food/search-food-by-chef`, { params: { keyword: query } });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${userInfo.token}`
+        },
+        params: {
+          keyword: query
+        }
+      };
+      console.log(userInfo.token)
+      const response = await axios.get(`/api/food/search-food-by-chef`, config);
       setSearchResults(response.data.data);
     } catch (error) {
       console.error('Failed to fetch foods', error);

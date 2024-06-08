@@ -11,19 +11,28 @@ orderRouter.post(
     asyncHandler(async (req, res) => {
         const { orderItems } = req.body;
 
-        if (!orderItems || orderItems && orderItems.length === 0) {
+        if (!orderItems) {
             res.status(400);
             throw new Error("No order items");
         } else {
-            let findOrder = await Order.findOne({ user: req.user._id, isPaid: false })
-
+            let findOrder = await Order.findOne({ user: req.user._id, isPaid: false });
+            
             if (findOrder) {
-                findOrder.orderItems = orderItems;
-                await findOrder.save();
-                res.status(200).json({
-                    message: 'Đã thêm vào giỏ hàng thành công',
-                    data: findOrder
-                })
+                if (findOrder.orderItems.includes(orderItems)) {
+                    res.status(200).json({
+                        message: 'Khóa học đã tồn tại trong khỏi giỏ hàng',
+                        data: findOrder
+                    })
+                }
+                else {
+                    findOrder.orderItems.push(orderItems)
+
+                    await findOrder.save();
+                    res.status(200).json({
+                        message: 'Đã thêm vào giỏ hàng thành công',
+                        data: findOrder
+                    })
+                }
             }
             else {
                 const order = new Order({
