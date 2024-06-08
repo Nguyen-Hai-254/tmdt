@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const CourseManagementByAdmin = () => {
-    const [rowsPerPage, setRowsPerPage] = useState(2);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [page, setPage] = useState(0);
 
     const [rows, setRows] = useState([])
