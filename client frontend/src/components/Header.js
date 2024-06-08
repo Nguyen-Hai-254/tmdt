@@ -178,6 +178,14 @@ const Header = () => {
                         Thông tin người dùng
                       </Link>
 
+                      {userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
+                        Quản lý cho đầu bếp
+                      </Link>}
+
+                      {userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
+                        Quản lý cho Admin
+                      </Link>}
+
                       <Link
                         className="dropdown-item"
                         to="#"
