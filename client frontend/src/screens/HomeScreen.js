@@ -4,7 +4,7 @@ import ShopSection from "./../components/homeComponents/ShopSection";
 import ContactInfo from "./../components/homeComponents/ContactInfo";
 import CalltoActionSection from "./../components/homeComponents/CalltoActionSection";
 import Footer from "./../components/Footer";
-import Navbar from "../components/Navbar/NavBar";
+import Navbar from "../components/Navbar/NavBarForAdminOrChef";
 import ImageSlider from "../components/homeComponents/imageSlider";
 
 const HomeScreen = ({ match }) => {
@@ -17,8 +17,8 @@ const HomeScreen = ({ match }) => {
       <Navbar/>
       <ImageSlider style={{ paddingBottom: '100px' }} />
       <ShopSection keyword={keyword} pagenumber={pagenumber} />
-      <CalltoActionSection />
-      <ContactInfo />
+      <CalltoActionSection id="info"/>
+      <ContactInfo id="contact" />
       <Footer />
     </div>
   );
