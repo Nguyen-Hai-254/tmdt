@@ -1,11 +1,8 @@
 import axios from "axios";
-// import { useSelector } from "react-redux";
 import store from '../Redux/store.js'
 
 const domain = `http://localhost:${5000}`;
-// const userInfo = useSelector((state) => state.userLogin.userInfo);
 const userInfo = store.getState().userLogin.userInfo;
-
 
 
 export const getAllCourseByChef = async () => {

@@ -18,7 +18,7 @@ const CourseManagement = () => {
                 const res = await getAllCourseByChef();
                 setData(res.data)
             } catch (e) {
-                console.log(e.error)
+                console.log(e.message)
             }
         }
 

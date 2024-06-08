@@ -237,6 +237,23 @@ class CourseController {
             })
         }
     }
+
+    static handleGetAllCourseByAdmin = async (req, res) => {
+        try {
+            const findAll = await Course.find({}).sort({ creatAt: -1 }).populate({ path: 'user', select: '_id name email telephone' })
+
+            return res.status(200).json({
+                message: 'OK',
+                data: findAll
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
 }
 
 export default CourseController
