@@ -39,3 +39,25 @@ export const navbarForChef = [
         url: '/food-register'
     }
 ]
+export const navbarUser = [
+    {
+        name: 'Trang chủ',
+        url: '/'
+    },
+    {
+        name: 'Khóa học nấu ăn',
+        url: '/course'
+    },
+    {
+        name: 'Món ăn miễn phí',
+        url: '/foods'
+    },
+    {
+        name: 'Giới thiệu',
+        url: '/#info'
+    },
+    {
+        name: 'Liên hệ',
+        url: '/#contact'
+    }
+]
