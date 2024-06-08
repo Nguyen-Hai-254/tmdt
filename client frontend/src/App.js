@@ -57,8 +57,6 @@ const App = () => {
         <PrivateRouter path="/add-food-to-course/:courseId" component={AddFoodToCourse} />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
         <PrivateRouter path="/course/:id" component={CouseDetail} />
-
-
         <PrivateRouter path="/chef" component={CourseManagement} />
         <PrivateRouter path="/all-food" component={FoodManagement} />
         <PrivateRouter path="/food/:id" component={FoodDetail} />

@@ -47,7 +47,26 @@ export const navbarUser = [
     },
     {
         name: 'Khóa học nấu ăn',
-        url: '/course'
+        url: '/course',
+        subMenu: [
+            {
+                name: 'Món ngon ba miền',
+                url: '/course/1'
+            },
+            {
+                name: 'Món ăn đường phố',
+                url: '/course/2'
+            },
+            {
+                name: 'Món ngon cho mẹ và bé',
+                url: '/course/3'
+            },
+            {
+                name: 'Pha chế tổng hợp',
+                url: '/course/4'
+            },
+            // Thêm các khóa học khác tại đây
+        ]
     },
     {
         name: 'Món ăn miễn phí',

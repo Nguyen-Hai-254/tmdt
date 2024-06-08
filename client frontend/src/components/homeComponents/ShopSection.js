@@ -48,7 +48,7 @@ const ShopSection = (props) => {
                         style={{ border: '4px solid #EC2028' }}
                       >
                         <div className="border-product">
-                          <Link to={`/products/${course._id}`}>
+                          <Link to={`/course/${course._id}`}>
                             <div className="shopBack">
                               <img src={course.image} alt={course.name} />
                             </div>
