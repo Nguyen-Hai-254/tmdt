@@ -17,3 +17,19 @@ export const getCourseById = async (id) => {
 
   return res.data;
 };
+
+export const updateCourseByChef = async (id, data) => {
+  const res = await axios({
+    method: "put",
+    headers: {
+      Authorization: userInfo.token ? `Bearer ${userInfo.token}` : "",
+    },
+    url: `${domain}/api/update-course-by-chef`,
+    data: data,
+    params: {
+      _id: id,
+    },
+  });
+
+  return res.data;
+};
