@@ -5,6 +5,7 @@ class CourseController {
     static handleCreateCourse = async (req, res) => {
         try {
             const { name, image, time, description, price, benefit, commitment, category } = req.body;
+            console.log(name, time, description, price, benefit, commitment, category);
             if (!name || !image || !category) {
                 return res.status(404).json({
                     message: 'Missing input parameter!'

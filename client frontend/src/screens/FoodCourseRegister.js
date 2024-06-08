@@ -5,6 +5,7 @@ import { Button, Checkbox, Form, Input, Select, Upload, Image } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import axios from 'axios';
 import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
+import { useSelector } from "react-redux";
 
 const { TextArea } = Input;
 
@@ -13,6 +14,7 @@ const FoodCourtRegister = () => {
     const [certification, setCertification] = useState("");
     const [imgURL, setImgURL] = useState('');
     const [showUpload, setShowUpload] = useState(true);
+    const userInfo = useSelector((state) => state.userLogin.userInfo);
 
     const [fileList, setFileList] = useState([]);
 
@@ -48,16 +50,23 @@ const FoodCourtRegister = () => {
     }, [fileList])
     const handleRegisterFoodCourt = useCallback(async (values) => {
         try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${userInfo.token}`
+                }
+            };
+
             const response = await axios.post('/api/course/create-course', {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
-            });
+            }, config);
             console.log('Course created successfully', response.data);
         } catch (error) {
             console.error('Failed to create course', error);
         }
     }, [certification]);
-    
+
     // const handleChangeImage = async (e) => {
     //     const base64 = await convertToBase64(e);
     //     setCertification(base64);
@@ -97,7 +106,7 @@ const FoodCourtRegister = () => {
 
                             <Form.Item
                                 label="Loại khóa học"
-                                name="type"
+                                name="category"
                                 rules={[
                                     {
                                         required: true,
@@ -116,11 +125,11 @@ const FoodCourtRegister = () => {
                                     {
                                         required: true,
                                         message:
-                                            'Vui lòng chọn thời lượng',
+                                            'Vui lòng chọn thời lượng (buổi)',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Thời lượng" />
+                                <Input placeholder="Thời lượng (buổi)" />
                             </Form.Item>
 
                             <Form.Item
@@ -134,7 +143,7 @@ const FoodCourtRegister = () => {
                                     },
                                 ]}
                             >
-                                <TextArea placeholder="Mô tả chi tiết khóa học" style={{height:100}} />
+                                <TextArea placeholder="Mô tả chi tiết khóa học" style={{ height: 100 }} />
                             </Form.Item>
 
                             <Form.Item
@@ -208,7 +217,7 @@ const FoodCourtRegister = () => {
                                     icon={<CompassFilled />}
                                     size="large"
                                     htmlType="submit"
-                                    >
+                                >
                                     Thêm khóa học
                                 </Button>
                             </div>
