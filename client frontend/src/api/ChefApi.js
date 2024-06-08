@@ -15,7 +15,6 @@ export const getAllCourseByChef = async () => {
     })
 
     return res.data;
-
 }
 
 export const getAllFoodByChef = async () => {
@@ -28,5 +27,19 @@ export const getAllFoodByChef = async () => {
     })
 
     return res.data;
+}
 
+export const getCoursByChef = async (courseId) => {
+    const res = await axios({
+        method: "get",
+        headers: {
+            'Authorization': userInfo.token ? `Bearer ${userInfo.token}` : ''
+        },
+        params: {
+            _id: courseId
+        },
+        url: `${domain}/api/course/get-course-by-chef`,
+    })
+
+    return res.data;
 }
