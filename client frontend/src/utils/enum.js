@@ -20,3 +20,8 @@ export const foodKindEnum = {
     rawDishes: 'Món ăn sống',
     other: 'Khác'
 }
+
+export const status = {
+    approved: 'Đã duyệt',
+    pending: 'Chờ duyệt'
+}

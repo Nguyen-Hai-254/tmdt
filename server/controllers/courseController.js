@@ -108,7 +108,7 @@ class CourseController {
             const courseId = req.query._id
             const { name, image, time, description, price, benefit, commitment, category } = req.body;
             if (!courseId || !name || !image || !category) {
-                return res.status(404).json({
+                return res.status(400).json({
                     message: 'Missing input parameter!'
                 })
             }
