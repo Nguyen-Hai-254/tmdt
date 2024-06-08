@@ -9,7 +9,7 @@ const orderRouter = express.Router();
 orderRouter.post(
     "/", protect,
     asyncHandler(async (req, res) => {
-        const { orderItems } = req.params;
+        const { orderItems } = req.body;
 
         if (!orderItems) {
             res.status(400);

@@ -77,7 +77,7 @@ class CourseController {
         }
     }
 
-    static handleGetCourseById = async (req, res) => { 
+    static handleGetCourseById = async (req, res) => {
         try {
             if (!req.query._id) {
                 return res.status(404).json({
@@ -183,7 +183,30 @@ class CourseController {
             })
         }
     }
+    static handleGetAllCourse = async (req, res) => {
+        try {
+            const findCourse = await Course.find({
+                active: true
+            })
 
+            const count = await Course.countDocuments({
+                active: true
+            })
+
+            return res.status(200).json({
+                message: 'OK',
+                data: {
+                    data: findCourse
+                }
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
     static handleAddFoodToCourse = async (req, res) => {
         try {
             if (!req.query._id || !req.body.foodList) {
@@ -206,6 +229,23 @@ class CourseController {
             return res.status(200).json({
                 message: 'You have successfully added the dish to the course',
                 data: findCourse
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
+
+    static handleGetAllCourseByAdmin = async (req, res) => {
+        try {
+            const findAll = await Course.find({}).sort({ creatAt: -1 }).populate({ path: 'user', select: '_id name email telephone' })
+
+            return res.status(200).json({
+                message: 'OK',
+                data: findAll
             })
         } catch (e) {
             return res.status(500).json({
