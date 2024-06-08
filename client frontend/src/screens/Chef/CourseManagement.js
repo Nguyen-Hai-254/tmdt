@@ -7,10 +7,12 @@ import { getAllCourseByChef } from "../../api/ChefApi";
 import { formatStringByThree } from "../../utils/convert";
 import Header from "../../components/Header";
 import NavBarForAdminOrChef from "../../components/Navbar/NavBarForAdminOrChef";
+import { useHistory } from "react-router-dom";
 
 
 const CourseManagement = () => {
     const [data, setData] = useState([])
+    const history = useHistory();
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -70,7 +72,7 @@ const CourseManagement = () => {
                                         </Box>
                                     </Box>
 
-                                    <Button variant="outlined" sx={{ color: '#FD2357', borderColor: '#23A6F0', borderRadius: '37px', fontWeight: 'bold', margin: '50px auto' }}>
+                                    <Button variant="outlined" sx={{ color: '#FD2357', borderColor: '#23A6F0', borderRadius: '37px', fontWeight: 'bold', margin: '50px auto' }} onClick={() => {history.push(`/course/${course._id}`) }}>
                                         Chi tiết
                                         <KeyboardArrowRightIcon sx={{ color: '#23A6F0' }} />
                                     </Button>

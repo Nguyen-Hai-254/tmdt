@@ -103,6 +103,7 @@ class CourseController {
     }
 
     static handleEditCourseByChef = async (req, res) => {
+        console.log(req.query);
         try {
             const courseId = req.query._id
             const { name, image, time, description, price, benefit, commitment, category } = req.body;
