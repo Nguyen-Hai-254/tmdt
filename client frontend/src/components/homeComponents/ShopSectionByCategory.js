@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useEffect,useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Rating from "./Rating";
 import Pagination from "./pagination";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,22 +8,32 @@ import Message from "../LoadingError/Error";
 import { NavBtnLink } from "../Navbar/NavElement";
 import { listProductByCategoryId } from "../../Redux/Actions/ProductActions";
 import Header from "../Header";
-import Navbar from "../Navbar/NavBar";
+import Navbar from "../Navbar/NavBarForUser";
 import ContactInfo from "./ContactInfo";
 import Footer from "../Footer";
 import CalltoActionSection from "./CalltoActionSection";
+import axios from 'axios';
 
 const ShopSectionCategory = (props) => {
-  const { keyword} = props;
+  const { keyword, pagenumber } = props;
+  const [courseList, setCourseList] = useState([]);
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const categoryId = props.match.params.id
-
-  const productList = useSelector((state) => state.productListByCategoryId);
-  const { loading, error, products, page, pages } = productList;
+  const getCourseListByCategory = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/course/get-course-by-category?category=${id}`);
+      console.log('Course list by category', response.data.data);
+      setCourseList(response.data.data); // Gán response vào state variable
+    } catch (error) {
+      console.error('Failed to get course list by category', error);
+    }
+  }, []);
 
   useEffect(() => {
-    dispatch(listProductByCategoryId(categoryId));
-  }, [dispatch, categoryId]);
+    getCourseListByCategory();
+  }, [getCourseListByCategory]);
+  const courseArray = Object.values(courseList);
+
   return (
     <>
     <Header />
@@ -33,60 +43,53 @@ const ShopSectionCategory = (props) => {
           <div className="row">
             <div className="col-lg-12 col-md-12 article">
               <div className="shopcontainer row">
-                {loading ? (
-                  <div className="mb-5">
-                    <Loading />
-                  </div>
-                ) : error ? (
-                  <Message variant="alert-danger">{error}</Message>
-                ) : (
-                  <>
-                    {products.map((product) => (
-
+                {
+                  courseList.length === 0 ? (
+                    <div className="mb-5">
+                      <Loading />
+                    </div>
+                  ) : 
+                 (
+                  <>                   
+                    {courseArray[0].map((course) => (
+                      course && (
                       <div
                         className="shop col-lg-4 col-md-6 col-sm-6"
-                        key={product._id}
+                        key={course._id}
+                        style={{ border: '4px solid #EC2028' }}
                       >
                         <div className="border-product">
-                          <Link to={`/products/${product._id}`}>
+                          <Link to={`/course/${course._id}`}>
                             <div className="shopBack">
-                              <img src={product.image} alt={product.name} />
+                              <img src={course.image} alt={course.name} />
                             </div>
                           </Link>
-
-                          <div className="shoptext">
+                          <div className="shoptext"
+                          style={{ marginTop: '10px', marginBottom: '10px' }}
+                          >
                             <p>
-                              <Link to={`/products/${product._id}`}>
-                                {product.name}
+                              <Link to={`/course/${course._id}`} style={{ marginTop: '10px', marginBottom: '10px' }}>
+                                {course.name}
                               </Link>
-
                             </p>
-                            {product.discountID !== "" ? (
-                              <p>
-                                <NavBtnLink to={''}>
-                                  Đang hạ giá
+                            <p>
+                                <NavBtnLink to={`/course/${course._id}`}>
+                                  {course.time}
                                 </NavBtnLink>
-                              </p>
-                              
-                            ): <p></p>}
-                            
-                            <Rating
-                              value={product.rating}
-                              text={`${product.numReviews} Đánh giá`}
-                            />
-                            <h3>{product.price}Đ</h3>
+                            </p>
+                            <h3>{course.price}Đ</h3>
+                            {/* <h3>{course.description}Đ</h3> */}
                           </div>
                         </div>
                       </div>
+                      )
                     ))}
                   </>
                 )}
-
                 {/* Pagination */}
                 <Pagination
-                  pages={pages}
-                  page={page}
                   keyword={keyword ? keyword : ""}
+                  pagenumber={pagenumber ? pagenumber : ""}
                 />
               </div>
             </div>

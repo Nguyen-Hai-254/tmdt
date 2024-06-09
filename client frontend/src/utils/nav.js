@@ -50,20 +50,20 @@ export const navbarUser = [
         url: '/course',
         subMenu: [
             {
-                name: 'Món ngon ba miền',
-                url: '/course/1'
+                name: 'Món ăn ba miền',
+                url: '/category/Món ăn ba miền'
             },
             {
                 name: 'Món ăn đường phố',
-                url: '/course/2'
+                url: '/category/Món ăn đường phố'
             },
             {
                 name: 'Món ngon cho mẹ và bé',
-                url: '/course/3'
+                url: '/category/Món ăn cho mẹ và bé'
             },
             {
                 name: 'Pha chế tổng hợp',
-                url: '/course/4'
+                url: '/category/Pha chế tổng hợp'
             },
             // Thêm các khóa học khác tại đây
         ]

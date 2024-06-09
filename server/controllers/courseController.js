@@ -147,7 +147,7 @@ class CourseController {
 
     static handleGetCourseByCategory = async (req, res) => {
         try {
-            if (!req.body.category) {
+            if (!req.query.category) {
                 return res.status(404).json({
                     message: 'Missing input parameter!'
                 })
@@ -156,7 +156,7 @@ class CourseController {
             const page = req.body.page ?? 1
 
             const findCourse = await Course.find({
-                category: req.body.category,
+                category: req.query.category,
                 active: true
             }).skip(num * (page - 1)).limit(num)
                 .sort({ view: -1, updatedAt: -1 })
@@ -164,7 +164,7 @@ class CourseController {
                 .select('-description -benefit -commitment')
 
             const count = await Course.countDocuments({
-                category: req.body.category,
+                category: req.query.category,
                 active: true
             })
 
