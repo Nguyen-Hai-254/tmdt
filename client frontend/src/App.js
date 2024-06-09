@@ -65,14 +65,14 @@ const App = () => {
         />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
         <Route path="/course/:id" component={CouseDetail} />
-        <PrivateRouter path="/chef/edit-course/:id" component={EditCourseForm} />        <PrivateRouter path="/course/:id" component={CouseDetail} />
+        <PrivateRouter
+          path="/chef/edit-course/:id"
+          component={EditCourseForm}
+        />
         <PrivateRouter path="/courselist" component={CourseListScreen} />
-
-
         <PrivateRouter path="/chef" component={CourseManagement} />
         <PrivateRouter path="/all-food" component={FoodManagement} />
         <PrivateRouter path="/food/:id" component={FoodDetail} />
-
         {/* admin */}
         <PrivateRouter
           path="/admin/course"

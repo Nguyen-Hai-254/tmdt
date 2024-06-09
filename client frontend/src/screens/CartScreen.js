@@ -1,26 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "./../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromcart } from "./../Redux/Actions/cartActions";
+import { getCart } from "../api/orderApi";
+import { getCourseById } from "../api/courseApi";
+import { Checkbox, CircularProgress, Container } from "@mui/material";
 
 const CartScreen = ({ match, location, history }) => {
   window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const productId = match.params.id;
+  const [cartItems, setCartItems] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedItem, setSelectedItem] = useState([]);
 
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  // const { cartItems } = cart;
 
-  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
+  const total = cartItems?.orderItems?.length || 0;
 
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
   }, [dispatch, productId, qty]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getCart()
+      .then((res) => {
+        setCartItems(res);
+        // res.data.forEach((item) => {
+        //   getCourseById(item.product).then((res) => {
+        //     orderItems.push({
+        //       qty: item.qty,
+        //       price: res.data.price,
+        //       name: res.data.name,
+        //       product: res.data._id,
+        // })
+        // getCourseById
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   const checkOutHandler = () => {
     history.push("/login?redirect=shipping");
@@ -29,12 +55,43 @@ const CartScreen = ({ match, location, history }) => {
   const removeFromCartHandle = (id) => {
     dispatch(removefromcart(id));
   };
+
+  const handleSelectItem = (e, cartItem) => {
+    if (e.target.checked) {
+      setSelectedItem([...selectedItem, cartItem]);
+    } else {
+      setSelectedItem(selectedItem.filter((item) => item._id !== cartItem._id));
+    }
+  };
+
+  const calculateTotalPrice = useMemo(() => {
+    console.log("selectedItem", selectedItem);
+    let total = 0;
+    selectedItem?.forEach((item) => {
+      total += item?.price || 0;
+    });
+    return total;
+  }, [selectedItem]);
+
+  if (isLoading)
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
   return (
     <>
       <Header />
       {/* Cart */}
       <div className="container">
-        {cartItems.length === 0 ? (
+        {total === 0 ? (
           <div className=" alert alert-info text-center mt-3">
             Giỏ hàng của bạn trống không!!
             <Link
@@ -52,11 +109,11 @@ const CartScreen = ({ match, location, history }) => {
             <div className=" alert alert-info text-center mt-3">
               Tổng số khóa học đã chọn
               <Link className="text-success mx-2" to="/cart">
-                ({cartItems.length})
+                ({selectedItem.length})
               </Link>
             </div>
             {/* cartiterm */}
-            {cartItems.map((item) => (
+            {cartItems?.orderItems?.map((item) => (
               <div className="cart-iterm row">
                 <div
                   onClick={() => removeFromCartHandle(item.product)}
@@ -68,7 +125,7 @@ const CartScreen = ({ match, location, history }) => {
                   <img src={item.image} alt={item.name} />
                 </div>
                 <div className="cart-text col-md-5 d-flex align-items-center">
-                  <Link to={`/products/${item.product}`}>
+                  <Link to={`/course/${item._id}`}>
                     <h4>{item.name}</h4>
                   </Link>
                 </div>
@@ -91,13 +148,16 @@ const CartScreen = ({ match, location, history }) => {
                   <h6>GIÁ</h6>
                   <h4>{item.price}Đ</h4>
                 </div>
+                <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
+                  <Checkbox onChange={(e) => handleSelectItem(e, item)} />
+                </div>
               </div>
             ))}
 
             {/* End of cart iterms */}
             <div className="total">
               <span className="sub">Tổng tiền:</span>
-              <span className="total-price">{total}Đ</span>
+              <span className="total-price">{calculateTotalPrice}Đ</span>
             </div>
             <hr />
             <div className="cart-buttons d-flex align-items-center row">

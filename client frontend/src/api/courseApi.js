@@ -24,7 +24,7 @@ export const updateCourseByChef = async (id, data) => {
     headers: {
       Authorization: userInfo.token ? `Bearer ${userInfo.token}` : "",
     },
-    url: `${domain}/api/update-course-by-chef`,
+    url: `${domain}/api/course/update-course-by-chef`,
     data: data,
     params: {
       _id: id,
