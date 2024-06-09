@@ -72,7 +72,11 @@ const EditCourseForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    updateCourseByChef(id, data);
+    updateCourseByChef(id, {
+      ...data,
+      commitment: data.commitment.filter((item) => item.trim() !== ""),
+      benefit: data.benefit.filter((item) => item.trim() !== ""),
+    });
   };
 
   useEffect(() => {
@@ -108,7 +112,7 @@ const EditCourseForm = () => {
   return (
     <Box sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
       <Typography variant="h4" gutterBottom>
-        Tạo món ăn
+        Chỉnh sửa khóa học
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller

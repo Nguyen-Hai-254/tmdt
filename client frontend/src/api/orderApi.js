@@ -12,10 +12,21 @@ export const addCourseToCart = async (orderItems) => {
     headers: {
       Authorization: userInfo.token ? `Bearer ${userInfo.token}` : "",
     },
-    url: `${domain}/api/orders?orderItems=${orderItems}`,
-    // data: {
-    //   orderItems: orderItems,
-    // },
+    url: `${domain}/api/orders`,
+    data: {
+      orderItems: orderItems,
+    },
+  });
+
+  return res.data;
+};
+export const getCart = async () => {
+  const res = await axios({
+    method: "get",
+    headers: {
+      Authorization: userInfo.token ? `Bearer ${userInfo.token}` : "",
+    },
+    url: `${domain}/api/orders/cart`,
   });
 
   return res.data;
