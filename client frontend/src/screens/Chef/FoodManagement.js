@@ -3,6 +3,7 @@ import { Card, Row, Col, Tag, Button } from 'antd';
 import NavBarForChef from "../../components/Navbar/NavBarForAdminOrChef";
 import { getAllFoodByChef } from "../../api/ChefApi";
 import { useHistory } from 'react-router-dom';
+import Header from '../../components/Header';
 
 
 
@@ -15,34 +16,34 @@ const FoodCard = ({ data }) => {
             state: { food: data }
         });
     };
-    return(
-    <Card
-        title={data.name}
-        cover={<img alt={data.name} src={data.image} />}
-        className="food-card"
-    >
-        <div className="food-details">
-            <div className="detail-info">
-                <div className="food-kind">
-                    <p><strong>Loại món ăn:</strong> {data.kind}</p>
+    return (
+        <Card
+            title={data.name}
+            cover={<img alt={data.name} src={data.image} />}
+            className="food-card"
+        >
+            <div className="food-details">
+                <div className="detail-info">
+                    <div className="food-kind">
+                        <p><strong>Loại món ăn:</strong> {data.kind}</p>
+                    </div>
+                    <div className="food-is-free">
+                        <p><strong>Miễn phí:</strong>
+                            <Tag color={data.isFree ? "green" : "red"}>
+                                {data.isFree ? "Có" : "Không"}
+                            </Tag>
+                        </p>
+                    </div>
+                    <div className="food-time">
+                        <p><strong>Thời lượng:</strong> {data.time}</p>
+                    </div>
                 </div>
-                <div className="food-is-free">
-                    <p><strong>Miễn phí:</strong> 
-                    <Tag color={data.isFree ? "green" : "red"}>
-                        {data.isFree ? "Có" : "Không"}
-                    </Tag>
-                    </p>
-                </div>
-                <div className="food-time">
-                    <p><strong>Thời lượng:</strong> {data.time}</p>
+                <div className="button-detail">
+                    <Button type='primary' onClick={handleDetailClick}>Chi tiết</Button>
                 </div>
             </div>
-            <div className="button-detail">
-                <Button type='primary' onClick={handleDetailClick}>Chi tiết</Button>
-            </div>
-        </div>
-    </Card>
-);
+        </Card>
+    );
 };
 
 
@@ -64,6 +65,7 @@ const FoodManagement = () => {
 
     return (
         <>
+            <Header />
             <NavBarForChef />
             <div className="food-management-container">
                 <Row gutter={[16, 16]}>

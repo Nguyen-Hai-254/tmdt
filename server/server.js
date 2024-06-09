@@ -16,7 +16,18 @@ import courseRouter from "./Routes/courseRoutes.js";
 dotenv.config();
 connectDatabase();
 const app = express();
-app.use(cors({ credentials: true, origin: true }));
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (origin == process.env.ORIGIN || process.env.ORIGIN == '*') {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
+  optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 

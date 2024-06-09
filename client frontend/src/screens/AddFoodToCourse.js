@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Select, List, Avatar, message } from 'antd';
+import { Form, Input, Button, List, Avatar, message } from 'antd';
 import axios from 'axios';
 import Header from "../components/Header";
 import { useSelector } from 'react-redux';
 import { getCoursByChef } from '../api/ChefApi';
+import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef"
 
 const AddFoodToCourse = ({ match }) => {
   const [form] = Form.useForm();
   const [searchResults, setSearchResults] = useState([]);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
 
   const userInfo = useSelector((state) => state.userLogin.userInfo);
 
@@ -88,6 +90,7 @@ const AddFoodToCourse = ({ match }) => {
       try {
         const res = await getCoursByChef(courseId);
         setSelectedFoods(res.data.foodList)
+        setName(res.data.name)
       } catch (e) {
         console.error(e.message)
       }
@@ -99,9 +102,10 @@ const AddFoodToCourse = ({ match }) => {
   return (
     <>
       <Header />
+      <NavBarForAdminOrChef role='Đầu bếp' />
       <div className="add-food-to-course--wrapper">
         <div className="container">
-          <h2 className="add-food-to-course--title">Thêm món ăn vào khóa học</h2>
+          <h2 className="add-food-to-course--title">Thêm món ăn vào khóa học "{name}"</h2>
           <div className="add-food-to-course--form">
             <Form
               form={form}

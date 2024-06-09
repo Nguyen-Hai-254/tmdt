@@ -206,17 +206,13 @@ const Header = () => {
                         Thông tin người dùng
                       </Link>
 
-                      {userInfo.role === "Đầu bếp" && (
-                        <Link className="dropdown-item" to="/chef">
-                          Quản lý cho đầu bếp
-                        </Link>
-                      )}
+                      {userInfo && userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
+                        Quản lý cho đầu bếp
+                      </Link>}
 
-                      {userInfo.role === "Admin" && (
-                        <Link className="dropdown-item" to="/admin/course">
-                          Quản lý cho Admin
-                        </Link>
-                      )}
+                      {userInfo && userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
+                        Quản lý cho Admin
+                      </Link>}
 
                       <Link
                         className="dropdown-item"
@@ -238,10 +234,12 @@ const Header = () => {
                   </>
                 )}
 
-                <Link to="/cart">
-                  <i className="fas fa-shopping-bag"></i>
-                  <span className="badge">{cartItems.length}</span>
-                </Link>
+                {userInfo && userInfo.role === 'Học viên' &&
+                  <Link to="/cart">
+                    <i className="fas fa-shopping-bag"></i>
+                    <span className="badge">{cartItems.length}</span>
+                  </Link>
+                }
               </div>
             </div>
           </div>

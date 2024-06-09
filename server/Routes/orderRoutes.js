@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { admin, protect } from "../Middleware/AuthMiddleware.js";
 import Order from "./../Models/OrderModel.js";
+import mongoose from "mongoose";
 
 const orderRouter = express.Router();
 
@@ -16,7 +17,7 @@ orderRouter.post(
             throw new Error("No order items");
         } else {
             let findOrder = await Order.findOne({ user: req.user._id, isPaid: false });
-            
+
             if (findOrder) {
                 if (findOrder.orderItems.includes(orderItems)) {
                     res.status(200).json({
@@ -146,5 +147,45 @@ orderRouter.put(
         }
     })
 );
+
+orderRouter.delete('/cart', protect,
+    asyncHandler(async (req, res) => {
+        const { orderItems } = req.body;
+
+        if (!orderItems) {
+            res.status(400);
+            throw new Error("No order items");
+        } else {
+            // let findOrder = await Order.findOne({ user: req.user._id, isPaid: false });
+            let findOrder = await Order.findOneAndDelete({ user: req.user._id, isPaid: false });
+
+            if (findOrder) {
+                if (findOrder.orderItems.includes(orderItems)) {
+                    const newOrder = findOrder.orderItems.filter(order => order !== mongoose.Types.ObjectId(orderItems))
+                    console.log(newOrder)
+                    console.log(mongoose.Types.ObjectId(orderItems) !== findOrder.orderItems[1])
+                    findOrder.orderItems = newOrder;
+                    await findOrder.save();
+                    res.status(200).json({
+                        message: 'Xóa khóa học thành công!',
+                        data: findOrder
+                    })
+                }
+                else {
+                    res.status(200).json({
+                        message: 'Khóa học không tồn tại trong giỏ hàng',
+                        data: findOrder
+                    })
+                }
+            }
+            else {
+                res.status(200).json({
+                    message: 'Giỏ hàng rỗng',
+                    data: findOrder
+                });
+            }
+        }
+    })
+)
 
 export default orderRouter;

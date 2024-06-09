@@ -1,10 +1,9 @@
-import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material"
+import { Container, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material"
 import Header from "../../components/Header"
 import NavBarForAdminOrChef from "../../components/Navbar/NavBarForAdminOrChef"
 import { useEffect, useState } from "react";
-import { getAllCourseByAdmin } from "../../api/AdminApi";
+import { getAllCourseByAdmin, approvalStatusByAdmin } from "../../api/AdminApi";
 import DeleteIcon from '@mui/icons-material/Delete';
-// import { DataGrid } from '@mui/x-data-grid';
 
 
 const CourseManagementByAdmin = () => {
@@ -22,12 +21,23 @@ const CourseManagementByAdmin = () => {
         setPage(0);
     };
 
+    const handleChange = async (event, courseId) => {
+        try {
+            const res = await approvalStatusByAdmin(courseId, event.target.value);
+            let newRows = rows.map(row =>
+                row._id === courseId ? { ...row, active: res.data.active } : row
+            )
+            setRows(newRows)
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
     useEffect(() => {
         const fetchApi = async () => {
             try {
                 const res = await getAllCourseByAdmin();
                 setRows(res.data)
-                console.log(rows)
             } catch (e) {
                 console.log(e.message)
             }
@@ -70,7 +80,15 @@ const CourseManagementByAdmin = () => {
                                 <TableCell align="left">{row.user.name}</TableCell>
                                 <TableCell align="center">{row.createdAt}</TableCell>
                                 <TableCell align="center">{row.view}</TableCell>
-                                <TableCell align="center">{row.active ? 'Đã duyệt' : 'Chờ duyệt'}</TableCell>
+                                <TableCell align="center">
+                                    <Select
+                                        value={row.active ? 'Đã duyệt' : 'Chờ duyệt'}
+                                        onChange={(e) => handleChange(e, row._id)}
+                                    >
+                                        <MenuItem value='Đã duyệt'>Đã duyệt</MenuItem>
+                                        <MenuItem value='Chờ duyệt'>Chờ duyệt</MenuItem>
+                                    </Select>
+                                </TableCell>
                                 <TableCell align="center"><DeleteIcon sx={{ color: 'red' }} /></TableCell>
                             </TableRow>
                         ))}

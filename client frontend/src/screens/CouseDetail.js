@@ -9,11 +9,6 @@ import {
   Divider,
   Grid,
   Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Typography,
 } from "@mui/material";
 import { getCourseById } from "../api/courseApi";
@@ -42,7 +37,6 @@ export default function CouseDetail() {
   ];
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userLogin.userInfo);
-  console.log(userInfo);
 
   const removeQuotes = (str) => {
     return str.replace(/['"]+/g, "");
@@ -135,7 +129,7 @@ export default function CouseDetail() {
                 color: "white",
                 display:
                   userRole.chef === userInfo?.role &&
-                  userInfo?._id === course?.user?._id
+                    userInfo?._id === course?.user?._id
                     ? "block"
                     : "none",
               }}
