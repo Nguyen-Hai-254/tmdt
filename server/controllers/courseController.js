@@ -1,11 +1,12 @@
 import Course from "../Models/CourseModel.js";
+import { statusEnum } from "../utils/enum.js";
 
 
 class CourseController {
     static handleCreateCourse = async (req, res) => {
         try {
             const { name, image, time, description, price, benefit, commitment, category } = req.body;
-            console.log(name, time, description, price, benefit, commitment, category);
+
             if (!name || !image || !category) {
                 return res.status(404).json({
                     message: 'Missing input parameter!'
@@ -246,6 +247,32 @@ class CourseController {
             return res.status(200).json({
                 message: 'OK',
                 data: findAll
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
+
+    static handleApprovalCourseByAdmin = async (req, res) => {
+        try {
+            const status = req.body.status;
+            const findCourse = await Course.findById(req.query._id);
+
+            if (status === statusEnum.approved && findCourse) {
+                findCourse.active = true
+            }
+            else {
+                findCourse.active = false
+            }
+
+            await findCourse.save();
+            return res.status(200).json({
+                message: 'OK',
+                data: findCourse
             })
         } catch (e) {
             return res.status(500).json({

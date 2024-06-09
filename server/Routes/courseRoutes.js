@@ -18,5 +18,6 @@ courseRouter.get('/get-all-course', CourseController.handleGetAllCourse);
 
 //admin
 courseRouter.get('/get-all-course-by-admin', protect, CourseController.handleGetAllCourseByAdmin);
+courseRouter.put('/approval-course-by-admin', protect, CourseController.handleApprovalCourseByAdmin);
 
 export default courseRouter;

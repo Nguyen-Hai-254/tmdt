@@ -154,9 +154,9 @@ const Header = () => {
                     className="form-control rounded search"
                     placeholder="Tìm kiếm món ăn"
                     onChange={(e) => setKeyword(e.target.value)}
-                    style={{ backgroundColor: '#EC2028' }}
+                    style={{ backgroundColor: '#EC2028', borderTopRightRadius: '0 !important' }}
                   />
-                  <button type="submit" className="search-button" style={{ backgroundColor: '#FFFFFF', color: '#EC2028' }} >
+                  <button type="submit" className="search-button" style={{ backgroundColor: '#FFFFFF', color: '#EC2028', border: '1px #EC2028 solid' }} >
                     Tìm kiếm
                   </button>
                 </form>
@@ -178,11 +178,11 @@ const Header = () => {
                         Thông tin người dùng
                       </Link>
 
-                      {userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
+                      {userInfo && userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
                         Quản lý cho đầu bếp
                       </Link>}
 
-                      {userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
+                      {userInfo && userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
                         Quản lý cho Admin
                       </Link>}
 
@@ -202,10 +202,12 @@ const Header = () => {
                   </>
                 )}
 
-                <Link to="/cart">
-                  <i className="fas fa-shopping-bag"></i>
-                  <span className="badge">{cartItems.length}</span>
-                </Link>
+                {userInfo && userInfo.role === 'Học viên' &&
+                  <Link to="/cart">
+                    <i className="fas fa-shopping-bag"></i>
+                    <span className="badge">{cartItems.length}</span>
+                  </Link>
+                }
               </div>
             </div>
           </div>

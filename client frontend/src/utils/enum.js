@@ -21,7 +21,21 @@ export const foodKindEnum = {
     other: 'Khác'
 }
 
-export const status = {
-    approved: 'Đã duyệt',
-    pending: 'Chờ duyệt'
+export const statusEnum = [
+    { approved: 'Đã duyệt' },
+    { pending: 'Chờ duyệt' }
+]
+
+export const categoriesEnum = {
+    regionalFood: 'Món ăn ba miền',
+    streetFood: 'Món ăn đường phố',
+    foodForMomAndBaby: 'Món ăn cho mẹ và bé',
+    bartending: 'Pha chế tổng hợp',
+    freeFood: 'Món ăn miễn phí'
+}
+
+export const userRole = {
+    admin: 'Admin',
+    chef: 'Đầu bếp',
+    student: 'Học viên'
 }

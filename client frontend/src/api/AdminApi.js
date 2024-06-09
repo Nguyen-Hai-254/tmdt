@@ -17,3 +17,21 @@ export const getAllCourseByAdmin = async () => {
     return res.data;
 
 }
+
+export const approvalStatusByAdmin = async (courseId, status) => {
+    const res = await axios({
+        method: "put",
+        headers: {
+            'Authorization': userInfo.token ? `Bearer ${userInfo.token}` : ''
+        },
+        params: {
+            _id: courseId
+        },
+        data: {
+            status: status
+        },
+        url: `${domain}/api/course/approval-course-by-admin`,
+    })
+
+    return res.data;
+}

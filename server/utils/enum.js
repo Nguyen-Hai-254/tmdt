@@ -40,3 +40,8 @@ export const sexEnum = {
     female: 'Nữ',
     other: 'Khác'
 }
+
+export const statusEnum = {
+    approved: 'Đã duyệt',
+    pending: 'Chờ duyệt'
+}
