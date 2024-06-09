@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addCourseToCart } from "../api/orderApi";
 import { userRole } from "../utils/enum";
+import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
 
 export default function CouseDetail() {
   const { id } = useParams();
@@ -47,7 +48,7 @@ export default function CouseDetail() {
   return (
     <>
       <Header />
-      <Navbar />
+      <NavBarForAdminOrChef role='Đầu bếp' />
       <Container>
         <Grid container mt={1} columnSpacing={2}>
           <Grid item xs={12} md={6}>
