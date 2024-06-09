@@ -15,7 +15,7 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from "../Constants/UserContants";
 import axios from "axios";
-import { ORDER_LIST_MY_RESET } from "../Constants/OrderConstants";
+import { ORDER_LIST_MY_RESET } from "../Constants/OrderConstants"; 
 
 // LOGIN
 export const login = (email, password) => async (dispatch) => {
@@ -56,35 +56,57 @@ export const logout = () => (dispatch) => {
 };
 
 // REGISTER
-export const register = (name, username, email, password, telephone, sex, role, description, certification) => async (dispatch) => {
-  try {
-    dispatch({ type: USER_REGISTER_REQUEST });
+export const register =
+  (
+    name,
+    username,
+    email,
+    password,
+    telephone,
+    sex,
+    role,
+    description,
+    certification
+  ) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: USER_REGISTER_REQUEST });
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    const { data } = await axios.post(
-      `/api/users/register`,
-      { name, username, email, password, telephone, sex, role, description, certification },
-      config
-    );
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data.data });
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data.data });
+      const { data } = await axios.post(
+        `/api/users/register`,
+        {
+          name,
+          username,
+          email,
+          password,
+          telephone,
+          sex,
+          role,
+          description,
+          certification,
+        },
+        config
+      );
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: data.data });
+      dispatch({ type: USER_LOGIN_SUCCESS, payload: data.data });
 
-    localStorage.setItem("userInfo", JSON.stringify(data.data));
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.response.data,
-    });
-  }
-};
+      localStorage.setItem("userInfo", JSON.stringify(data.data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response.data,
+      });
+    }
+  };
 
 // USER DETAILS
 export const getUserDetails = (id) => async (dispatch, getState) => {

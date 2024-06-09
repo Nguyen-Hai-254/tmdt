@@ -15,6 +15,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout());
+    history.replace("/");
   };
 
   const submitHandler = (e) => {
@@ -29,7 +30,7 @@ const Header = () => {
   return (
     <div>
       {/* Top Header */}
-      <div className="Announcement " style={{ backgroundColor: '#EC2028' }}>
+      <div className="Announcement " style={{ backgroundColor: "#EC2028" }}>
         <div className="container">
           <div className="row">
             <div className="col-md-6 d-flex align-items-center display-none">
@@ -37,19 +38,39 @@ const Header = () => {
               <p>cookie@gmail.com</p>
             </div>
             <div className=" col-12 col-lg-6 justify-content-center justify-content-lg-end d-flex align-items-center">
-              <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.instagram.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <i className="fab fa-linkedin-in"></i>
               </a>
-              <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.youtube.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <i className="fab fa-youtube"></i>
               </a>
-              <a href="https://www.pinterest.com" target="_blank" rel="noreferrer">
+              <a
+                href="https://www.pinterest.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <i className="fab fa-pinterest-p"></i>
               </a>
             </div>
@@ -58,7 +79,7 @@ const Header = () => {
       </div>
       {/* Header */}
       <div className="header">
-        <div className="container" >
+        <div className="container">
           {/* MOBILE HEADER */}
           <div className="mobile-header">
             <div className="container ">
@@ -140,11 +161,14 @@ const Header = () => {
           </div>
 
           {/* PC HEADER */}
-          <div className="pc-header" style={{ padding: '0px' }}>
+          <div className="pc-header" style={{ padding: "0px" }}>
             <div className="row">
               <div className="col-md-3 col-4 d-flex align-items-center">
                 <Link className="navbar-brand" to="/">
-                  <img alt="logo" src={require('../images/Cookies.png').default} />
+                  <img
+                    alt="logo"
+                    src={require("../images/Cookies.png").default}
+                  />
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
@@ -154,9 +178,13 @@ const Header = () => {
                     className="form-control rounded search"
                     placeholder="Tìm kiếm món ăn"
                     onChange={(e) => setKeyword(e.target.value)}
-                    style={{ backgroundColor: '#EC2028' }}
+                    style={{ backgroundColor: "#EC2028" }}
                   />
-                  <button type="submit" className="search-button" style={{ backgroundColor: '#FFFFFF', color: '#EC2028' }} >
+                  <button
+                    type="submit"
+                    className="search-button"
+                    style={{ backgroundColor: "#FFFFFF", color: "#EC2028" }}
+                  >
                     Tìm kiếm
                   </button>
                 </form>
@@ -178,13 +206,17 @@ const Header = () => {
                         Thông tin người dùng
                       </Link>
 
-                      {userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
-                        Quản lý cho đầu bếp
-                      </Link>}
+                      {userInfo.role === "Đầu bếp" && (
+                        <Link className="dropdown-item" to="/chef">
+                          Quản lý cho đầu bếp
+                        </Link>
+                      )}
 
-                      {userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
-                        Quản lý cho Admin
-                      </Link>}
+                      {userInfo.role === "Admin" && (
+                        <Link className="dropdown-item" to="/admin/course">
+                          Quản lý cho Admin
+                        </Link>
+                      )}
 
                       <Link
                         className="dropdown-item"
@@ -197,8 +229,12 @@ const Header = () => {
                   </div>
                 ) : (
                   <>
-                    <Link to="/register" style={{ color: '#EC2028' }}>Đăng ký</Link>
-                    <Link to="/login" style={{ color: '#EC2028' }}>Đăng nhập</Link>
+                    <Link to="/register" style={{ color: "#EC2028" }}>
+                      Đăng ký
+                    </Link>
+                    <Link to="/login" style={{ color: "#EC2028" }}>
+                      Đăng nhập
+                    </Link>
                   </>
                 )}
 

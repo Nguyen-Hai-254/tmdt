@@ -57,12 +57,12 @@ const ShopSection = (props) => {
                           style={{ marginTop: '10px', marginBottom: '10px' }}
                           >
                             <p>
-                              <Link to={`/products/${course._id}`} style={{ marginTop: '10px', marginBottom: '10px' }}>
+                              <Link to={`/course/${course._id}`} style={{ marginTop: '10px', marginBottom: '10px' }}>
                                 {course.name}
                               </Link>
                             </p>
                             <p>
-                                <NavBtnLink to={''}>
+                                <NavBtnLink to={`/course/${course._id}`}>
                                   {course.time}
                                 </NavBtnLink>
                             </p>

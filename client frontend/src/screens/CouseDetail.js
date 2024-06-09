@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar/NavBar";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -21,10 +22,13 @@ import { addToCart } from "../Redux/Actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addCourseToCart } from "../api/orderApi";
 import { userRole } from "../utils/enum";
+import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
+import NavBarForUser from "../components/Navbar/NavBarForUser";
 
 export default function CouseDetail() {
   const { id } = useParams();
   const [course, setCourse] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const prevPage = [
     {
@@ -48,14 +52,38 @@ export default function CouseDetail() {
   };
 
   useEffect(() => {
-    getCourseById(id).then((res) => {
-      setCourse(res.data);
-    });
+    setIsLoading(true);
+    getCourseById(id)
+      .then((res) => {
+        setCourse(res.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [id]);
+
+  if (isLoading)
+    return (
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+
   return (
     <>
       <Header />
-      <Navbar />
+      {userInfo?.role === userRole.student ? (
+        <NavBarForUser />
+      ) : (
+        <NavBarForAdminOrChef role={userInfo?.role} />
+      )}
       <Container>
         <Grid container mt={1} columnSpacing={2}>
           <Grid item xs={12} md={6}>
@@ -80,20 +108,13 @@ export default function CouseDetail() {
                   )}
                 </>
               ))}
-              <Link href="#">{course?.category}</Link>
+              <Link href="/">{course?.category}</Link>
             </Box>
             <Box display={"flex"} columnGap={1} mb={2}>
               <Typography
-                component={Link}
                 sx={{
                   color: "red",
                   fontSize: 22,
-                  textDecoration: "none",
-                  "&:hover": {
-                    color: "darkred",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                  },
                 }}
               >
                 {course?.category?.toUpperCase()}
@@ -112,7 +133,11 @@ export default function CouseDetail() {
               sx={{
                 bgcolor: "red",
                 color: "white",
-                display: userRole.chef === userInfo?.role ? "block" : "none",
+                display:
+                  userRole.chef === userInfo?.role &&
+                  userInfo?._id === course?.user?._id
+                    ? "block"
+                    : "none",
               }}
               color="success"
               variant="contained"
@@ -214,7 +239,7 @@ export default function CouseDetail() {
 
         <Typography mt={3}>Thời lượng buổi học: {course?.time}</Typography>
 
-        <Typography mt={2} sx={{ fontWeight: "bold", fontSize: 18 }}>
+        {/* <Typography mt={2} sx={{ fontWeight: "bold", fontSize: 18 }}>
           Đầu bếp
         </Typography>
         <Box
@@ -224,7 +249,7 @@ export default function CouseDetail() {
           height={300}
           sx={{ objectFit: "cover", mx: "50%" }}
           alt={course?.user?.name}
-        />
+        /> */}
 
         <Typography mt={2} sx={{ fontWeight: "bold", fontSize: 18 }}>
           Cam kết
