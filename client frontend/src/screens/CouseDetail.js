@@ -5,19 +5,12 @@ import {
   Box,
   Button,
   Container,
-  Divider,
   Grid,
   Link,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Typography,
 } from "@mui/material";
 import { getCourseById } from "../api/courseApi";
 import { useParams } from "react-router-dom";
-import { addToCart } from "../Redux/Actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addCourseToCart } from "../api/orderApi";
 import { userRole } from "../utils/enum";
@@ -38,7 +31,6 @@ export default function CouseDetail() {
   ];
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userLogin.userInfo);
-  console.log(userInfo);
 
   const removeQuotes = (str) => {
     return str.replace(/['"]+/g, "");

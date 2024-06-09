@@ -65,7 +65,8 @@ const App = () => {
         />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
         <Route path="/course/:id" component={CouseDetail} />
-        <PrivateRouter path="/chef/edit-course/:id" component={EditCourseForm} />        <PrivateRouter path="/course/:id" component={CouseDetail} />
+        <PrivateRouter path="/chef/edit-course/:id" component={EditCourseForm} />
+        {/* <PrivateRouter path="/course/:id" component={CouseDetail} /> */}
         <PrivateRouter path="/courselist" component={CourseListScreen} />
 
 
