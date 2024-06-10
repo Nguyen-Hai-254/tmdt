@@ -31,6 +31,7 @@ import CourseListScreen from "./screens/CourseListScreen";
 import CouseDetailByAdmin from "./screens/CourseDetailByAdmin";
 import StudentPaidCourse from "./screens/StudentPaidCourse";
 import PaidCourseDetail from "./screens/PaidCourseDetail";
+import EditCourseForm from "./screens/Chef/EditCourseForm";
 
 const App = () => {
   return (
@@ -66,7 +67,8 @@ const App = () => {
           component={AddFoodToCourse}
         />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
-        <PrivateRouter path="/course/:id" component={CouseDetail} />
+        <Route path="/course/:id" component={CouseDetail} />
+        <PrivateRouter path="/chef/edit-course/:id" component={EditCourseForm} />
         <PrivateRouter path="/courselist" component={CourseListScreen} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />

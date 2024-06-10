@@ -18,11 +18,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { categoriesOptions } from "../../utils/options";
 import { useHistory, useParams } from "react-router-dom";
 import { getCourseById, updateCourseByChef } from "../../api/courseApi";
+import { convertToBase64 } from "../../utils/convert";
 
 const EditCourseForm = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory()
+  const history = useHistory();
   const {
     control,
     handleSubmit,
@@ -56,15 +57,9 @@ const EditCourseForm = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result);
-        // reset({
-        //   ...data,
-        //   image: reader.result,
-        // });
-      };
-      reader.readAsDataURL(file);
+      convertToBase64(e).then((img) => {
+        setPreviewImage(img);
+      });
     }
   };
 
@@ -73,9 +68,10 @@ const EditCourseForm = () => {
       ...data,
       commitment: data.commitment.filter((item) => item.trim() !== ""),
       benefit: data.benefit.filter((item) => item.trim() !== ""),
+      image: previewImage,
+    }).then(() => {
+      history.push(`/course/${id}`);
     });
-
-    history.push(`/course/${id}`)
   };
 
   useEffect(() => {
