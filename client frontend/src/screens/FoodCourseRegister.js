@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 import Header from "../components/Header";
-import { Button, Checkbox, Form, Input, Select, Upload, Image } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Upload, Image, message } from 'antd';
 import { InboxOutlined, CompassFilled } from '@ant-design/icons';
 import axios from 'axios';
 import NavBarForAdminOrChef from "../components/Navbar/NavBarForAdminOrChef";
@@ -17,6 +17,7 @@ const FoodCourtRegister = () => {
     const userInfo = useSelector((state) => state.userLogin.userInfo);
 
     const [fileList, setFileList] = useState([]);
+    // const [messageApi, contextHolder] = message.useMessage();
 
     const getBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -61,7 +62,9 @@ const FoodCourtRegister = () => {
                 ...values,
                 image: certification // Gửi ảnh dưới dạng base64
             }, config);
-            console.log('Course created successfully', response.data);
+            if (response?.status === 200) {
+                message.success('Đăng khóa học thành công. Hãy đợi admin xét duyệt!');
+            }
         } catch (error) {
             console.error('Failed to create course', error);
         }

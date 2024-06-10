@@ -29,6 +29,7 @@ import CourseManagementByAdmin from "./screens/Admin/CourseManagementByAdmin";
 import CouseDetail from "./screens/CouseDetail";
 import EditCourseForm from "./screens/Chef/EditCourseForm";
 import CourseListScreen from "./screens/CourseListScreen";
+import CouseDetailByAdmin from "./screens/CourseDetailByAdmin";
 
 const App = () => {
   return (
@@ -54,7 +55,7 @@ const App = () => {
         <PrivateRouter path="/payment" component={PaymentScreen} />
         <PrivateRouter path="/placeorder" component={PlaceOrderScreen} />
         <PrivateRouter path="/food-register" component={FoodRegister} />
-        <PrivateRouter path="/food-update" component={FoodUpdate} />
+        <PrivateRouter path="/food-update/:foodId" component={FoodUpdate} />
         <PrivateRouter
           path="/food-course-register"
           component={FoodCourseRegister}
@@ -77,7 +78,12 @@ const App = () => {
         {/* admin */}
         <PrivateRouter
           path="/admin/course"
+          exact
           component={CourseManagementByAdmin}
+        />
+        <PrivateRouter
+          path="/admin/course/:id"
+          component={CouseDetailByAdmin}
         />
         <Route path="*" component={NotFound} />
       </Switch>

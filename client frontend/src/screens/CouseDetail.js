@@ -1,18 +1,17 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Header from "../components/Header";
-import Navbar from "../components/Navbar/NavBar";
+// import Navbar from "../components/Navbar/NavBar";
 import {
   Box,
   Button,
   CircularProgress,
   Container,
-  Divider,
   Grid,
   Link,
   Typography,
 } from "@mui/material";
 import { getCourseById } from "../api/courseApi";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { addToCart } from "../Redux/Actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addCourseToCart } from "../api/orderApi";
@@ -24,6 +23,8 @@ export default function CouseDetail() {
   const { id } = useParams();
   const [course, setCourse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const history = useHistory()
 
   const prevPage = [
     {
@@ -44,6 +45,14 @@ export default function CouseDetail() {
   const handleAddCart = (course) => {
     addCourseToCart(id);
   };
+
+  const handleEditCourse = (courseId) => {
+    history.push(`/chef/edit-course/${courseId}`)
+  }
+
+  const handleAddFoddToCourse = (courseId) => {
+    history.push(`/add-food-to-course/${courseId}`)
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -122,23 +131,46 @@ export default function CouseDetail() {
             <Typography mb={2} sx={{ color: "#FE7613", fontSize: 20 }}>
               {course?.price} VNĐ
             </Typography>
-            <Button
-              mb={2}
-              sx={{
-                bgcolor: "red",
-                color: "white",
-                display:
-                  userRole.chef === userInfo?.role &&
-                    userInfo?._id === course?.user?._id
-                    ? "block"
-                    : "none",
-              }}
-              color="success"
-              variant="contained"
-              onClick={() => handleAddCart(course)}
-            >
-              Chỉnh sửa khóa học
-            </Button>
+
+            <Box sx={{ display: 'flex' }}>
+              <Button
+                mb={2}
+                sx={{
+                  bgcolor: "red",
+                  color: "white",
+                  display:
+                    userRole.chef === userInfo?.role &&
+                      userInfo?._id === course?.user?._id
+                      ? "block"
+                      : "none",
+                }}
+                color="success"
+                variant="contained"
+                onClick={() => handleEditCourse(course?._id)}
+              >
+                Chỉnh sửa khóa học
+              </Button>
+
+              <Button
+                ml={2}
+                sx={{
+                  ml: 2,
+                  bgcolor: "#1976d2",
+                  color: "white",
+                  display:
+                    userRole.chef === userInfo?.role &&
+                      userInfo?._id === course?.user?._id
+                      ? "block"
+                      : "none",
+                }}
+                color="success"
+                variant="contained"
+                onClick={() => handleAddFoddToCourse(course?._id)}
+              >
+                Chỉnh sửa món ăn trong khóa học
+              </Button>
+            </Box>
+
 
             <Button
               mb={2}
