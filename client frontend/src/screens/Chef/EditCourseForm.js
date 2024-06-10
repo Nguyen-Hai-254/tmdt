@@ -3,8 +3,6 @@ import { useForm, Controller, useFieldArray } from "react-hook-form";
 import {
   TextField,
   Button,
-  Checkbox,
-  FormControlLabel,
   Typography,
   Box,
   InputAdornment,
@@ -17,14 +15,14 @@ import {
   Container,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { categoriesEnum } from "../../utils/enum";
 import { categoriesOptions } from "../../utils/options";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getCourseById, updateCourseByChef } from "../../api/courseApi";
 
 const EditCourseForm = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory()
   const {
     control,
     handleSubmit,
@@ -71,12 +69,13 @@ const EditCourseForm = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     updateCourseByChef(id, {
       ...data,
       commitment: data.commitment.filter((item) => item.trim() !== ""),
       benefit: data.benefit.filter((item) => item.trim() !== ""),
     });
+
+    history.push(`/course/${id}`)
   };
 
   useEffect(() => {
@@ -92,8 +91,6 @@ const EditCourseForm = () => {
         setIsLoading(false);
       });
   }, [id]);
-
-  console.log(getValues());
 
   if (isLoading)
     return (

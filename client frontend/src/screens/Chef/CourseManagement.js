@@ -52,7 +52,7 @@ const CourseManagement = () => {
                                         objectFit: 'cover'
                                     }}
                                     alt="The house from the offer."
-                                    src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+                                    src={course.image}
                                 />
                                 <Box sx={{ ml: 2 }}>
                                     <Typography variant="h5" sx={{ color: '#FD2357', mt: 2 }}>{course.category}</Typography>
@@ -72,7 +72,7 @@ const CourseManagement = () => {
                                         </Box>
                                     </Box>
 
-                                    <Button variant="outlined" sx={{ color: '#FD2357', borderColor: '#23A6F0', borderRadius: '37px', fontWeight: 'bold', margin: '50px auto' }} onClick={() => {history.push(`/course/${course._id}`) }}>
+                                    <Button variant="outlined" sx={{ color: '#FD2357', borderColor: '#23A6F0', borderRadius: '37px', fontWeight: 'bold', margin: '50px auto' }} onClick={() => { history.push(`/course/${course._id}`) }}>
                                         Chi tiết
                                         <KeyboardArrowRightIcon sx={{ color: '#23A6F0' }} />
                                     </Button>

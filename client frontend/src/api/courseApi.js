@@ -12,7 +12,7 @@ export const getCourseById = async (id) => {
     headers: {
       Authorization: userInfo.token ? `Bearer ${userInfo.token}` : "",
     },
-    url: `${domain}/api/course/get-course-by-id?_id=${id}`,
+    url: userInfo.role === 'Admin' ? `${domain}/api/course/get-course-by-admin?_id=${id}` : `${domain}/api/course/get-course-by-id?_id=${id}`,
   });
 
   return res.data;

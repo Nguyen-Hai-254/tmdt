@@ -282,6 +282,30 @@ class CourseController {
             })
         }
     }
+
+    static handleGetCourseByAdmin = async (req, res) => {
+        try {
+            if (!req.query._id) {
+                return res.status(404).json({
+                    message: 'Missing input parameter!'
+                })
+            }
+
+            const findCourse = await Course.findById(req.query._id).populate({ path: 'user', select: '_id name' })
+                .populate({ path: 'foodList' })
+
+            return res.status(200).json({
+                message: 'OK',
+                data: findCourse
+            })
+        } catch (e) {
+            return res.status(500).json({
+                message: e.message,
+                status: 500,
+                error: 'Internal Server Error',
+            })
+        }
+    }
 }
 
 export default CourseController

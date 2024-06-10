@@ -4,6 +4,7 @@ import NavBarForAdminOrChef from "../../components/Navbar/NavBarForAdminOrChef"
 import { useEffect, useState } from "react";
 import { getAllCourseByAdmin, approvalStatusByAdmin } from "../../api/AdminApi";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from "react-router-dom";
 
 
 const CourseManagementByAdmin = () => {
@@ -75,7 +76,7 @@ const CourseManagementByAdmin = () => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row" align="center">{index + 1 + rowsPerPage * page}</TableCell>
-                                <TableCell align="left">{row.name}</TableCell>
+                                <TableCell align="left"><Link to={`/admin/course/${row._id}`} >{row.name}</Link></TableCell>
                                 <TableCell align="left">{row.category}</TableCell>
                                 <TableCell align="left">{row.user.name}</TableCell>
                                 <TableCell align="center">{row.createdAt}</TableCell>

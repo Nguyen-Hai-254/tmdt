@@ -97,7 +97,7 @@ const FoodUpdate = () => {
             },
         };
         const response = await axios.get(url, config);
-        console.log("here1");
+        
         if (response?.status === 200) {
             console.log("trueeeeee");
             const foodData = response.data.data;
