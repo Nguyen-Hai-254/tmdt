@@ -1,6 +1,7 @@
 import {
   CART_ADD_ITEM,
   CART_CLEAR_ITEMS,
+  CART_INIT,
   CART_REMOVE_ITEM,
   CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
@@ -11,6 +12,13 @@ export const cartReducer = (
   action
 ) => {
   switch (action.type) {
+    case CART_INIT:
+      const init = action.payload;
+      return {
+        ...state,
+        cartItems: [...init],
+      };
+
     case CART_ADD_ITEM:
       const item = action.payload;
       const existItem = state.cartItems.find((x) => x.product === item.product);

@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { getCart } from "../api/orderApi";
 import { getCourseById } from "../api/courseApi";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import NavBarForUser from "../components/Navbar/NavBarForUser";
-import { Box, CircularProgress, Container, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 
 export default function PaidCourseDetail() {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +58,7 @@ export default function PaidCourseDetail() {
           maxHeight="300px"
           sx={{ objectFit: "cover", my: 3 }}
         />
+        <Typography>{course?.description}</Typography>
         {course?.foodList?.map((food, index) => (
           <Box
             key={food?._id}
@@ -71,36 +79,43 @@ export default function PaidCourseDetail() {
             <Typography>
               <b>Thời gian thực hiện:</b> {food?.time}
             </Typography>
+
             <Typography fontWeight={700}>Nguyên liệu:</Typography>
-            {food?.ingredient?.map((lst) => (
-              <Box>
-                {lst?.split("\n").map((item, index) => (
-                  <ul key={index}>
-                    <li>{item?.replace("", "")}</li>
-                  </ul>
-                ))}
-              </Box>
-            ))}
+            <ul>
+              {food?.ingredient?.map((lst, index) => (
+                <Fragment key={"ingredient-a" + index}>
+                  {lst?.split("\n").map((item, index) => (
+                    <li key={"ingredient-b" + index}>
+                      {item?.replace("", "")}
+                    </li>
+                  ))}
+                </Fragment>
+              ))}
+            </ul>
+
             <Typography fontWeight={700}>Chuẩn bị:</Typography>
-            {food?.processing?.map((lst) => (
-              <Box>
-                {lst?.split("\no").map((item, index) => (
-                  <ul key={index}>
-                    <li>{item?.replace("o\t", "\t")}</li>
-                  </ul>
-                ))}
-              </Box>
-            ))}
+            <ul>
+              {food?.processing?.map((lst, index) => (
+                <Fragment key={"processing-a" + index}>
+                  {lst?.split("\no").map((item, index) => (
+                    <li key={"processing-b" + index}>
+                      {item?.replace("o\t", "\t")}
+                    </li>
+                  ))}
+                </Fragment>
+              ))}
+            </ul>
+
             <Typography fontWeight={700}>Hướng dẫn thực hiện:</Typography>
-            {food?.make?.map((lst) => (
-              <Box>
-                {lst?.split("\no").map((item, index) => (
-                  <ul key={index}>
-                    <li>{item?.replace("o\t", "\t")}</li>
-                  </ul>
-                ))}
-              </Box>
-            ))}
+            <ul>
+              {food?.make?.map((lst, index) => (
+                <Fragment key={"make-a" + index}>
+                  {lst?.split("\no").map((item, index) => (
+                    <li key={"make-b" + index}>{item?.replace("o\t", "\t")}</li>
+                  ))}
+                </Fragment>
+              ))}
+            </ul>
           </Box>
         ))}
 

@@ -4,9 +4,15 @@ import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
 import { login } from "./../Redux/Actions/userActions";
-import { Button, Typography } from 'antd';
-import { MailOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
+import { Button, Typography } from "antd";
+import {
+  MailOutlined,
+  LockOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
+import { getCart } from "../api/orderApi";
+import { addToCart, initCart } from "../Redux/Actions/cartActions";
 
 const { Title, Text } = Typography;
 const Login = ({ location, history }) => {
@@ -23,13 +29,16 @@ const Login = ({ location, history }) => {
 
   useEffect(() => {
     if (userInfo) {
-      if (redirect === '/' && userInfo.role === 'Đầu bếp') {
-        history.push('/chef')
+      if (redirect === "/" && userInfo.role === "Đầu bếp") {
+        history.push("/chef");
+      } else if (redirect === "/" && userInfo.role === "Admin") {
+        history.push("/admin/course");
+      } else {
+        getCart().then((res) => {
+          dispatch(initCart(res?.orderItems));
+        });
+        history.push(redirect);
       }
-      else if (redirect === '/' && userInfo.role === 'Admin') {
-        history.push('/admin/course')
-      }
-      else { history.push(redirect); }
     }
   }, [userInfo, history, redirect]);
 
@@ -43,9 +52,17 @@ const Login = ({ location, history }) => {
       <div className="login--container">
         <div className="register--photo">
           <Link to="/">
-            <img src="./images/logo.png" alt="Logo" className="register--logo" />
+            <img
+              src="./images/logo.png"
+              alt="Logo"
+              className="register--logo"
+            />
           </Link>
-          <img src="./images/registerbackground.png" alt="Register" className="register--photo-img" />
+          <img
+            src="./images/registerbackground.png"
+            alt="Register"
+            className="register--photo-img"
+          />
         </div>
         <div className="login--content">
           <div className="login--content--title">
@@ -54,10 +71,7 @@ const Login = ({ location, history }) => {
           <div className="login--content--form">
             {error && <Message variant="alert-danger">{error}</Message>}
             {loading && <Loading />}
-            <form
-              className=""
-              onSubmit={submitHandler}
-            >
+            <form className="" onSubmit={submitHandler}>
               <div className="login--content--form--email">
                 <p className="email--icon">
                   <MailOutlined />
@@ -81,19 +95,26 @@ const Login = ({ location, history }) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <p className="password-icon">
-                  {showPassword ? <EyeOutlined onClick={() => setShowPassword(!showPassword)} /> : <EyeInvisibleOutlined onClick={() => setShowPassword(!showPassword)} />}
+                  {showPassword ? (
+                    <EyeOutlined
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  ) : (
+                    <EyeInvisibleOutlined
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  )}
                 </p>
               </div>
-              <Button
-                type="primary"
-                size="large"
-                htmlType="submit"
-              >Đăng nhập</Button>
+              <Button type="primary" size="large" htmlType="submit">
+                Đăng nhập
+              </Button>
             </form>
-            <Text>Bạn chưa có tài khoản? Đăng ký <Link to='/register'>Tại đây</Link></Text>
+            <Text>
+              Bạn chưa có tài khoản? Đăng ký <Link to="/register">Tại đây</Link>
+            </Text>
           </div>
         </div>
-
       </div>
     </>
   );

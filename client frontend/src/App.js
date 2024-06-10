@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import "./responsive.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,7 +52,7 @@ const App = () => {
         <Route path="/student/register" component={StudentRegister} />
         <Route path="/chef/register" component={ChefRegister} />
         <PrivateRouter path="/profile" component={ProfileScreen} />
-        <Route path="/cart/:id?" component={CartScreen} />
+        <PrivateRouter path="/cart/:id?" component={CartScreen} />
         <PrivateRouter path="/shipping" component={ShippingScreen} />
         <PrivateRouter path="/payment" component={PaymentScreen} />
         <PrivateRouter path="/placeorder" component={PlaceOrderScreen} />
@@ -68,7 +68,10 @@ const App = () => {
         />
         <PrivateRouter path="/order/:id" component={OrderScreen} />
         <Route path="/course/:id" component={CouseDetail} />
-        <PrivateRouter path="/chef/edit-course/:id" component={EditCourseForm} />
+        <PrivateRouter
+          path="/chef/edit-course/:id"
+          component={EditCourseForm}
+        />
         <PrivateRouter path="/courselist" component={CourseListScreen} />
 
         <PrivateRouter path="/chef" component={CourseManagement} />
