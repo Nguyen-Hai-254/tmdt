@@ -6,6 +6,11 @@ import {
   Button,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider,
   Grid,
   Link,
@@ -24,6 +29,7 @@ export default function CouseDetail() {
   const { id } = useParams();
   const [course, setCourse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   const prevPage = [
     {
@@ -38,11 +44,15 @@ export default function CouseDetail() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userLogin.userInfo);
 
-  const removeQuotes = (str) => {
-    return str.replace(/['"]+/g, "");
-  };
   const handleAddCart = (course) => {
-    addCourseToCart(id);
+    addCourseToCart(id).then((res) => {
+      setAlert(res?.message);
+    });
+    dispatch(addToCart(null, 1, course));
+  };
+
+  const handleClose = () => {
+    setAlert(null);
   };
 
   useEffect(() => {
@@ -129,7 +139,7 @@ export default function CouseDetail() {
                 color: "white",
                 display:
                   userRole.chef === userInfo?.role &&
-                    userInfo?._id === course?.user?._id
+                  userInfo?._id === course?.user?._id
                     ? "block"
                     : "none",
               }}
@@ -322,6 +332,17 @@ export default function CouseDetail() {
           </Grid>
         </Box>
       </Container>
+      <Dialog open={alert} onClose={handleClose}>
+        {/* <DialogTitle textAlign={"center"}>Thông báo</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText>{alert}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" onClick={handleClose}>
+            Đóng
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

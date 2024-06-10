@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/userActions";
+import { userRole } from "../utils/enum";
 
 const Header = () => {
   const [keyword, setKeyword] = useState();
@@ -206,13 +207,23 @@ const Header = () => {
                         Thông tin người dùng
                       </Link>
 
-                      {userInfo && userInfo.role === 'Đầu bếp' && <Link className="dropdown-item" to="/chef">
-                        Quản lý cho đầu bếp
-                      </Link>}
+                      {userInfo && userInfo.role === userRole.student && (
+                        <Link className="dropdown-item" to="/student/paid-course">
+                          Khóa học của tôi
+                        </Link>
+                      )}
 
-                      {userInfo && userInfo.role === 'Admin' && <Link className="dropdown-item" to="/admin/course">
-                        Quản lý cho Admin
-                      </Link>}
+                      {userInfo && userInfo.role === "Đầu bếp" && (
+                        <Link className="dropdown-item" to="/chef">
+                          Quản lý cho đầu bếp
+                        </Link>
+                      )}
+
+                      {userInfo && userInfo.role === "Admin" && (
+                        <Link className="dropdown-item" to="/admin/course">
+                          Quản lý cho Admin
+                        </Link>
+                      )}
 
                       <Link
                         className="dropdown-item"
@@ -234,12 +245,12 @@ const Header = () => {
                   </>
                 )}
 
-                {userInfo && userInfo.role === 'Học viên' &&
+                {userInfo && userInfo.role === "Học viên" && (
                   <Link to="/cart">
                     <i className="fas fa-shopping-bag"></i>
                     <span className="badge">{cartItems.length}</span>
                   </Link>
-                }
+                )}
               </div>
             </div>
           </div>
